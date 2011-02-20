@@ -74,7 +74,5 @@
 			if (main.contains(this))
 				main.removeChild(this);
 		}
- 
 	}
- 
 }
