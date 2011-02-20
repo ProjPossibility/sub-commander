@@ -96,6 +96,19 @@
 			loadSound("Audio/Voice/weaponsFired.mp3");//Sounds.voice
 			//End of voices
 			loadSound("Audio/Sound/Animals/dolphin01.mp3");//Sounds.dolphin = 42
+			//More voices
+			loadSound("Audio/Voice/Menu/Intro.mp3");//Sounds.voiceIntro = 43;
+			loadSound("Audio/Voice/Menu/tutorial1.mp3");//Sounds.voicetutorial1 = 44;
+			loadSound("Audio/Voice/Menu/tutorial2.mp3");//Sounds.voicetutorial2 = 45;
+			loadSound("Audio/Voice/Menu/tutorial3.mp3");//Sounds.voicetutorial3 = 46;
+			loadSound("Audio/Voice/Menu/tutorial4.mp3");//Sounds.voicetutorial4 = 47;
+			loadSound("Audio/Voice/Menu/tutorial5.mp3");//Sounds.voicetutorial5 = 48;
+			loadSound("Audio/Voice/Menu/tutorialBehind.mp3");//Sounds.voicetutorialBehind = 49;
+			loadSound("Audio/Voice/Menu/tutorialClose.mp3");//Sounds.voicetutorialClose = 50;
+			loadSound("Audio/Voice/Menu/tutorialFinal.mp3");//Sounds.voicetutorialFinal = 51;
+			loadSound("Audio/Voice/Menu/tutorialFront.mp3");//Sounds.voicetutorialFront = 52;
+			loadSound("Audio/Voice/Menu/tutorialLeft.mp3");//Sounds.voicetutorialLeft = 53;
+			loadSound("Audio/Voice/Menu/tutorialRight.mp3");//Sounds.voicetutorialRight = 54;
 			doneRequestingSounds = true;
 		}
 		
@@ -212,25 +225,27 @@
 		}
 		
 		//only plays if this voice is not already playing
-		public function playVoicePassive(soundEnum:int, volume:Number = 1, panning:Number = 0,
-											startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
-			for(var i:int = 0; i < voiceSounds.length; i++){
-				if(voiceSounds.length > 0){
-					//if there is another voice sound, don't add me
-					return null;
-				}
+		//maxWait is how many sounds can be in the queue for this one to still wait its turn
+		public function playVoicePassive(soundEnum:int, maxWait:int = 0, volume:Number = 1, panning:Number = 0,
+											startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):Boolean{
+			if(voiceSounds.length > maxWait){
+				//if there are too many voice sounds, don't add me
+				return false;
 			}
-			return playSoundPositional(soundEnum, volume, panning, startTime, loops, callback, delay);
+			playSoundPositional(soundEnum, volume, panning, startTime, loops, callback, delay);
+			return true;
 		}
 		
 		//only plays if this voice is not already playing
-		public function playVoicePassiveUpdate(soundEnum:int, volFunc:Function, panFunc:Function, 
-												  startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
-			if(voiceSounds.length > 0){
-				//if there is another voice sound, don't add me
-				return null;
+		//maxWait is how many sounds can be in the queue for this one to still wait its turn
+		public function playVoicePassiveUpdate(soundEnum:int, maxWait:int, volFunc:Function, panFunc:Function, 
+												  startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):Boolean{
+			if(voiceSounds.length > maxWait){
+				//if there are too many voice sounds, don't add me
+				return false;
 			}
-			return playSoundPositionalUpdate(soundEnum, volFunc, panFunc, startTime, loops, callback, delay);
+			playSoundPositionalUpdate(soundEnum, volFunc, panFunc, startTime, loops, callback, delay);
+			return true;
 		}
 		
 		//cancels all other voice sounds
@@ -267,7 +282,7 @@
 			return mySound;
 		}
 		
-		public function playSoundOClockPosition(angle:Number, pan:Number, callback:Function = null, delay:int = 0):MySound{
+		public function playSoundOClockPosition(angle:Number, pan:Number, callback:Function = null, delay:int = 0):Boolean{
 			var oclockPos:int = ((angle-15)/360)*12;
 			if(oclockPos <= 0){
 				oclockPos = 12;
@@ -313,7 +328,7 @@
 				default:
 					break;
 			}
-			return playVoicePassive(soundEnum, 1, pan, 0, 0, callback, delay);
+			return playVoicePassive(soundEnum, 1, 1, pan, 0, 0, callback, delay);
 		}
 		
 		public function queueVoiceSound(snd:MySound){
