@@ -69,6 +69,11 @@
 			trace("sounds loaded, allow game to start!");
 			//soundEngine.playSoundPositional(Sounds.ping, 0.5, -.5);
 			beginDescent();
+			//oClockTest();
+		}
+		
+		public function oClockTest():void{
+			soundEngine.playSoundOClockPosition((targets[0] as Target).hearingAngleFS, (targets[0] as Target).getPan(), oClockTest);
 		}
 		
 		public function beginDescent():void{
