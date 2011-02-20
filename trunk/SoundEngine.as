@@ -239,13 +239,13 @@
 			var mySound:MySound = playSoundPositional(soundEnum, volume, panning, startTime, loops, callback, delay);
 			while(voiceSounds.length > 2){
 				//remove all sounds but me
-				trace("terminate sound: " + voiceSounds[1].getSoundEnum());
+				//trace("terminate sound: " + voiceSounds[1].getSoundEnum());
 				voiceSounds[1].terminate();
 				voiceSounds.splice(1,1);
 			}
-			trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
+			//trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
 			voiceSounds[0].stop();
-			trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
+			//trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
 			//voiceSounds[0].resume();
 			return mySound;
 		}
@@ -256,13 +256,13 @@
 			var mySound:MySound = playSoundPositionalUpdate(soundEnum, volFunc, panFunc, startTime, loops, callback, delay);
 			while(voiceSounds.length > 2){
 				//remove all sounds but me
-				trace("terminate sound: " + voiceSounds[1].getSoundEnum());
+				//trace("terminate sound: " + voiceSounds[1].getSoundEnum());
 				voiceSounds[1].terminate();
 				voiceSounds.splice(1,1);
 			}
-			trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
+			//trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
 			voiceSounds[0].stop();
-			trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
+			//trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
 			//voiceSounds[0].resume();
 			return mySound;
 		}
@@ -313,7 +313,7 @@
 				default:
 					break;
 			}
-			return playSoundPositional(soundEnum, 1, pan, 0, 0, callback, delay);
+			return playVoicePassive(soundEnum, 1, pan, 0, 0, callback, delay);
 		}
 		
 		public function queueVoiceSound(snd:MySound){
@@ -324,23 +324,23 @@
 					return;
 				}
 			}
-			trace("enqueue sound: " + snd.getSoundEnum());
+			//trace("enqueue sound: " + snd.getSoundEnum());
 			voiceSounds.push(snd);
 			if(voiceSounds.length > 1){
 				snd.pause();
-				trace("pause sound: " + snd.getSoundEnum());
+				//trace("pause sound: " + snd.getSoundEnum());
 			}
 		}
 		
 		public function voiceSoundEnded(snd:MySound){
-			trace("dequeue sound: " + snd.getSoundEnum());
+			//trace("dequeue sound: " + snd.getSoundEnum());
 			if(voiceSounds[0] != snd){
 				trace("THESE SHOULD BE EQUAL, SOMETHING BAD HAPPENED IN SOUNDENGINE voiceSoundEnded");
 			}
 			voiceSounds.shift();
 			if(voiceSounds.length > 0){
 				voiceSounds[0].resume();
-				trace("resume sound: " + snd.getSoundEnum());
+				//trace("resume sound: " + snd.getSoundEnum());
 			}
 		}
 		
