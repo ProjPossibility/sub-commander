@@ -46,7 +46,7 @@
 			missions.currentIndex = 2;
 			missions.advance();
 			
-			radarTimer = new Timer(80,1);
+			radarTimer = new Timer(100,int.MAX_VALUE);
 			radarTimer.addEventListener(TimerEvent.TIMER, radarTimerHandler, false, 0, true);
 			oldRadar = 0;
 			newRadar = 0;
@@ -63,7 +63,7 @@
 			for(var i:int = targets.length-1; i>=0; i--) {
 				targets[i].update();
 			}
-			radarTimer.start();
+			//radarTimer.start();
 		}
 		
 		public function soundsLoaded():void{
