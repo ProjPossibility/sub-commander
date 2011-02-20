@@ -19,9 +19,9 @@
 		public var loadDoneCallback:Function;
 		public var waveSound:MySound;
 		
-		public var anoopPan:Number = 0; //pan values for speakers
-		public var patrickPan:Number = .7;
-		public var alexPan:Number = -.7;
+		public static var anoopPan:Number = 0; //pan values for speakers
+		public static var patrickPan:Number = .7;
+		public static var alexPan:Number = -.7;
 		
 		public static function getInstance():SoundEngine {
 			if (instance == null) {
@@ -195,9 +195,9 @@
 			return newSound;
 		}
 		
-		public function playSoundVoice(soundEnum:int, callback:Function = null):MySound{
-			return playSoundPositional(soundEnum, 1, anoopPan, 0, 0, callback);
-			/*if(soundEnum == Sounds.SOMEANOOPTALK){
+		/*public function playSoundVoice(soundEnum:int, callback:Function = null):MySound{
+			//return playSoundPositional(soundEnum, 1, anoopPan, 0, 0, callback);
+			if(soundEnum == Sounds.SOMEANOOPTALK){
 				return playSoundPositional(soundEnum, 1, anoopPan, 0, 0, null);
 			} else if(soundEnum == Sounds.SOMEANOOPTALK2){
 				return playSoundPositional(soundEnum, 1, anoopPan, 0, 0, null);
@@ -217,8 +217,8 @@
 					break;
 				default:
 					break;
-			}*/
-		}
+			}
+		//}
 		
 		//public function channelPanUpdate(evt:Event):void{
 			//(channelPanDict[channel] as Function)()
