@@ -69,7 +69,7 @@
 				if(targets[i].angleFS > oldRadar && targets[i].angleFS <= newRadar)
 				{
 					//trace("ping!");
-					soundEngine.playSoundPositionalUpdate(Sounds.ping, targets[i].getVolume(), targets[i].getPan);
+					soundEngine.playSoundPositionalUpdate(Sounds.pingPosition, targets[i].getVolume(), targets[i].getPan);
 				}
 			}
 		}

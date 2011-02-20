@@ -42,12 +42,13 @@
 		private function loadSounds(){
 			loadSound("Audio/Sound/Waves/waves01.mp3");//Sounds.Waves = 0
 			bgmusicFileName = "waves01.mp3";
-			loadSound("Audio/Sound/Sonar/Sonar01.mp3");//Sounds.Ping = 1
-			loadSound("Audio/Sound/Underwater/Underwater04.mp3");//Sounds.Underwater = 2
-			loadSound("Audio/Sound/Engine/dieselEngine01.mp3");//Sounds.engine = 3
-			loadSound("Audio/Sound/Alarm/Klaxon01.mp3");//Sounds.klaxon = 4
-			loadSound("Audio/Sound/Explosion/waterExplosion01.mp3");//Sounds.explosion = 5
-			loadSound("Audio/Sound/Torpedo/torpedo01.mp3");//Sounds.torpedoLaunch
+			loadSound("Audio/Sound/Sonar/Sonar01.mp3");//Sounds.PingPosition = 1
+			loadSound("Audio/Sound/Sonar/Sonar02.mp3");//Sounds.pingMine = 2
+			loadSound("Audio/Sound/Underwater/Underwater04.mp3");//Sounds.Underwater = 4
+			loadSound("Audio/Sound/Engine/dieselEngine01.mp3");//Sounds.engine = 5
+			loadSound("Audio/Sound/Alarm/Klaxon01.mp3");//Sounds.klaxon = 6
+			loadSound("Audio/Sound/Explosion/waterExplosion01.mp3");//Sounds.explosion = 7
+			loadSound("Audio/Sound/Torpedo/torpedo01.mp3");//Sounds.torpedoLaunch = 8
 			doneRequestingSounds = true;
 		}
 		
