@@ -27,8 +27,6 @@
 			submarine.y = stage.stageHeight/2;
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
-			
-			//soundEngine.playSound(Sounds.ping);
 		}
 		
 		public function update(e:Event):void {
@@ -44,7 +42,7 @@
 		
 		public function soundsLoaded():void{
 			trace("sounds loaded, allow game to start!");
-			//soundEngine.playSound(Sounds.ping, 0, 5);
+			soundEngine.playSoundPositional(Sounds.ping, 1, -.5);
 		}
 	}
 	
