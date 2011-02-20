@@ -10,6 +10,7 @@
 		public var hearingAngleFS:Number;
 		public var hearingVolume:Number;
 		public var mySound:int;
+		public var objectName:String;
 		
 		public var main:Main;
 
@@ -58,6 +59,10 @@
 			else if(hearingAngleFS >= 270)
 				return (hearingAngleFS - 360)/90;
 			return 0;
+		}
+		
+		public function getObjectName():String {
+			return objectName;
 		}
 		
 		public function update():void {			

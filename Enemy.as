@@ -24,6 +24,7 @@
 			this.xPos = xPos;
 			this.yPos = yPos;
 			mySound = Sounds.pingEnemy;
+			objectName = "Enemy";
 		}
 
 		public override function update():void

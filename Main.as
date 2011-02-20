@@ -28,26 +28,26 @@
 			init();
 			missions = new Missions(this);
 			missions.init();
-			missions.startGame();
 		}
 		
 		public function init():void
 		{
 			submarine = new Submarine(this);
-			enemy = new Enemy(this, 50, 100);
-			
+			this.addChild(submarine);
 			targets = new Vector.<Target>();
+			/*
+			enemy = new Enemy(this, 50, 100);
 			var mine:Mine = new Mine(this);
+			
 			targets.push(mine);
 			targets.push(enemy);
 			
-			this.addChild(submarine);
 			this.addChild(mine);
 			this.addChild(enemy);
 			
 			mine.x = Math.random()*stage.stageWidth;
 			mine.y = Math.random()*stage.stageHeight;
-			
+			*/
 			submarine.init();
 			submarine.x = stage.stageWidth/2;
 			submarine.y = stage.stageHeight/2;
@@ -65,11 +65,11 @@
 			this.addEventListener(Event.ENTER_FRAME, update);
 			
 			// overlay
-			overlay = new Overlay();
+			overlay = new Overlay(this);
 			this.addChild(overlay);
 			overlay.init();
 			//uncomment to use debug
-			//overlay.visible = false;
+			overlay.visible = false;
 		}
 		
 		public function remove() :void
@@ -86,7 +86,7 @@
 			//trace("sup");
 			soundEngine.update();
 			//soundEngine.playSound(Sounds.ping);
-			
+			missions.update();
 			//if the game has started, update all game objects
 			if(gameStart) {
 				submarine.update();
@@ -96,7 +96,10 @@
 				radarTimer.start();
 			}
 		}
-		
+		public function beginGame():void {
+			this.gameStart = true;
+			missions.startGame();
+		}
 		public function soundsLoaded():void{
 			trace("sounds loaded, allow game to start!");
 			//soundEngine.playSoundPositional(Sounds.ping, 0.5, -.5);
