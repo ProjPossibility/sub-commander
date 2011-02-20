@@ -29,6 +29,16 @@
 			if (distanceFS <= 250000)
 			{
 				hearingVolume = (250000-distanceFS)/2500000;
+				if(hearingAngleFS >= 0 && hearingAngleFS < 90)
+					hearingVolume+=(90-hearingAngleFS)/1800;
+				else if(hearingAngleFS >= 90 && hearingAngleFS < 180)
+					hearingVolume+=(90-hearingAngleFS)/1800;
+				else if(hearingAngleFS >= 180 && hearingAngleFS < 270)
+					hearingVolume +=(180-hearingAngleFS)/1800;
+				else if(hearingAngleFS >= 270)
+					//return (hearingAngleFS - 360)/90;
+					hearingVolume +=(hearingAngleFS - 270)/1800;
+				//trace(hearingVolume);
 				return hearingVolume;
 			}
 			else

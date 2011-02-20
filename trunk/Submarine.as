@@ -21,7 +21,7 @@
 		public var speed:Number;
 		public var maxSpeed:Number;
 		public var acceleration:Number;
-		public var engineVol:Number =0.1;
+		public var engineVol:Number =0.02;
 
 		public var downRight:Boolean;
 		public var downLeft:Boolean;
@@ -47,7 +47,7 @@
 			vY = 0;
 
 			speed = 0;
-			maxSpeed = 3;
+			maxSpeed = 2;
 			acceleration = 1;
 
 			oldX = 0;
@@ -153,10 +153,10 @@
 				{
 					speed = maxSpeed;
 				}
-				engineVol+=0.01;
-				if(engineVol > 0.15)
+				engineVol+=0.005;
+				if(engineVol > 0.08)
 				{
-					engineVol = 0.15;
+					engineVol = 0.08;
 				}
 			}
 			else
@@ -166,10 +166,10 @@
 				{
 					speed = 0;
 				}
-				engineVol-=0.01;
-				if(engineVol < 0.05)
+				engineVol-=0.005;
+				if(engineVol < 0.02)
 				{
-					engineVol = 0.05;
+					engineVol = 0.02;
 				}
 			}
 			vX = Math.cos(rotation * Math.PI / 180) * speed;
