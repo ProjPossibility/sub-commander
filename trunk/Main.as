@@ -28,6 +28,7 @@
 			submarine.y = stage.stageHeight/2;
 			
 			missions = new Missions(this);
+			missions.init();
 			missions.advance();
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
