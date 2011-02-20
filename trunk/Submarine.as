@@ -310,7 +310,7 @@
 		
 		public function checkCollisions():void {
 			for (var i:int = main.targets.length-1; i>=0; i--) {
-				if (this.hitTestObject(main.targets[i]) && main.targets[i].getObjectName( == "Position") {
+				if (this.hitTestObject(main.targets[i]) && main.targets[i].getObjectName() == "Position") {
 					main.targets.splice(i, 1);
 				}
 			}
