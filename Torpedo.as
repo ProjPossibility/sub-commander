@@ -41,10 +41,12 @@
 			y += ySpeed;
 			if (x > (startX+300) || x < (startX-300))
 			{
+				main.soundEngine.playSound(Sounds.voiceTargetMissed);
 				removeSelf();
 			}
 			else if (y > (startY+300) || y < (startY-300))
 			{
+				main.soundEngine.playSound(Sounds.voiceTargetMissed);
 				removeSelf();
 			}
 			else
@@ -60,6 +62,7 @@
 						}
 						main.targets.splice(i,1);
 						removeSelf();
+						main.soundEngine.playSound(Sounds.voiceTargetHit);
 					}
 				}
 			}
