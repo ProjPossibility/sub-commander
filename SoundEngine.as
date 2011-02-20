@@ -42,6 +42,8 @@
 			bgmusicFileName = "waves01.mp3";
 			loadSound("Audio/Sound/Sonar/Sonar01.mp3");//Sounds.Ping = 1
 			loadSound("Audio/Sound/Underwater/Underwater04.mp3");//Sounds.Underwater = 2
+			loadSound("Audio/Sound/Engine/dieselEngine01.mp3");//Sounds.engine = 3
+			loadSound("Audio/Sound/Alarm/Klaxon01.mp3");//Sounds.klaxon = 4
 			doneRequestingSounds = true;
 		}
 		

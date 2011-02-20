@@ -42,7 +42,7 @@
 		
 		public function soundsLoaded():void{
 			trace("sounds loaded, allow game to start!");
-			soundEngine.playSoundPositional(Sounds.ping, 1, -.5);
+			soundEngine.playSoundPositional(Sounds.engine, 1, -.5);
 		}
 	}
 	
