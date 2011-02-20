@@ -45,9 +45,15 @@
 					break;
 				//1 is case for mine_instruction
 				case 1:
+					var mine:Mine = new Mine(main);
+					main.targets.push( mine );
+					main.addChild( mine );
 					break;
 				//2 is case for mine
 				case 2:
+					var mine:Mine = new Mine(main);
+					main.targets.push( mine );
+					main.addChild( mine );
 					break;
 				default:
 					trace("default");
