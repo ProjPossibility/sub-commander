@@ -53,7 +53,7 @@
 			maxSpinSpeed = 4;
 
 			fireTimer = new Timer(400,1);
-			explodeTimer = new Timer(100,1);
+			explodeTimer = new Timer(150,1);
 			fireTimer.addEventListener(TimerEvent.TIMER, fireTimerHandler, false, 0, true);
 			explodeTimer.addEventListener(TimerEvent.TIMER, explodeTimerHandler, false, 0, true);
 

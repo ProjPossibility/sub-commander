@@ -4,8 +4,8 @@
 		
 		public function Position(main:Main) {
 			this.main = main;
+			mySounds = Sounds.pingPosition;
 		}
-
 	}
 	
 }
