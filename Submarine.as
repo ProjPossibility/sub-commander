@@ -27,6 +27,7 @@
 		public var downLeft:Boolean;
 		public var downUp:Boolean;
 		public var downSpace:Boolean;
+		public var turning:Boolean = false;
 
 		public var oldX:Number;
 
@@ -131,12 +132,20 @@
 			if (downRight && ! downLeft)
 			{
 				spinSpeed = maxSpinSpeed;
-				//main.soundEngine.playSoundPositional(Sounds.voiceRightFullRudder, 1, SoundEngine.anoopPan);
+				if(!turning)
+				{
+					main.soundEngine.playVoicePassive(Sounds.voiceRightFullRudder, 1, SoundEngine.anoopPan);
+					turning = true;
+				}
 			}
 			else if (downLeft && !downRight)
 			{
 				spinSpeed =  -  maxSpinSpeed;
-				//main.soundEngine.playSoundPositional(Sounds.voiceLeftFullRudder, 1, SoundEngine.anoopPan);
+				if(!turning)
+				{
+					main.soundEngine.playVoicePassive(Sounds.voiceLeftFullRudder, 1, SoundEngine.anoopPan);
+					turning = true;
+				}
 			}
 			else
 			{
@@ -147,6 +156,7 @@
 				else if (Math.abs(spinSpeed) < 1)
 				{
 					spinSpeed = 0;
+					turning = false;
 				}
 			}
 			rotation +=  spinSpeed;
