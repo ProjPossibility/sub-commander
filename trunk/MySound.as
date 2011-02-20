@@ -11,6 +11,7 @@
 		//public var soundTransform:SoundTransform;
 		private var channel:SoundChannel;
 		private var panFunc:Function;
+		private var volFunc:Function;
 		
 		public function MySound(s:Sound) {
 			// constructor code
@@ -35,6 +36,25 @@
 			//trace("pan complete");
 			channel.removeEventListener(Event.ENTER_FRAME, panUpdate);
 			channel.removeEventListener(Event.SOUND_COMPLETE, onPanComplete);
+		}
+		
+		public function registerVolUpdate(volFunction:Function){
+			volFunc = volFunction;
+			//trace("pan register");
+			StageClass.getStage().addEventListener(Event.ENTER_FRAME, volUpdate);
+			channel.addEventListener(Event.SOUND_COMPLETE, onVolComplete);
+		}
+		
+		public function volUpdate(evt:Event){
+			//trace("old Pan: " + channel.soundTransform.pan + " new pan: " + panFunc());
+			//channel.soundTransform.pan = panFunc();
+			channel.soundTransform = new SoundTransform(volFunc(), channel.soundTransform.pan);
+		}
+		
+		public function onVolComplete(evt:Event){
+			//trace("pan complete");
+			channel.removeEventListener(Event.ENTER_FRAME, volUpdate);
+			channel.removeEventListener(Event.SOUND_COMPLETE, onVolComplete);
 		}
 		
 		public function setChannel(chan:SoundChannel){

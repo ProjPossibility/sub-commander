@@ -17,7 +17,6 @@
 		public var doneRequestingSounds:Boolean = false;
 		public var doneLoadingSounds:Boolean = false;
 		public var loadDoneCallback:Function;
-		//private var channelPanDict:Dictionary = new Dictionary();
 		public static function getInstance():SoundEngine {
 			if (instance == null) {
 				allowInstantiation = true;
@@ -44,6 +43,7 @@
 			bgmusicFileName = "waves01.mp3";
 			loadSound("Audio/Sound/Sonar/Sonar01.mp3");//Sounds.PingPosition = 1
 			loadSound("Audio/Sound/Sonar/Sonar02.mp3");//Sounds.pingMine = 2
+			loadSound("Audio/Sound/Sonar/Sonar02.mp3");//Sounds.pingEnemy = 3
 			loadSound("Audio/Sound/Underwater/Underwater04.mp3");//Sounds.Underwater = 4
 			loadSound("Audio/Sound/Engine/dieselEngine01.mp3");//Sounds.engine = 5
 			loadSound("Audio/Sound/Alarm/Klaxon01.mp3");//Sounds.klaxon = 6
@@ -74,7 +74,7 @@
 			trace("Sound loaded: " + finalURL);
 			if(finalURL  == bgmusicFileName){
 				//playSound(Sounds.waves);
-				playSoundPositional(Sounds.waves, .3, 0, 500);//skipping a half second of delay at the start
+				//playSoundPositional(Sounds.waves, .3, 0, 500);//skipping a half second of delay at the start
 			}
 			//CAN'T UNLOAD ACTION LISTENER, POSSIBLY INEFFICIENT BUT ONLY ONCE FOR EACH SOUND
 			totalSoundsLoaded++;
@@ -124,11 +124,11 @@
 		//panFunc must return a Number between -1 (left) and 1 (right) for the pan value
 		//startTime is the number of millis it skips at the start of the sound (if you want to start in the middle of the sound)
 		//loops is the number of times it loops the sound (0 to play once)
-		public function playSoundPositionalUpdate(soundEnum:int, volume:Number, panFunc:Function, 
+		public function playSoundPositionalUpdate(soundEnum:int, volFunc:Function, panFunc:Function, 
 												  startTime:Number = 0, loops:int = 0):void{
 			var newSound:MySound = sounds[soundEnum].clone();
 			var trans:SoundTransform;
-			trans = new SoundTransform(volume, panFunc()); 
+			trans = new SoundTransform(volFunc(), panFunc()); 
 			var channel:SoundChannel = newSound.sound.play(startTime, loops);
 			channel.soundTransform = trans;
 			//channel.addEventListener(Event.ENTER_FRAME, channelPanUpdate);
@@ -137,6 +137,7 @@
 			//newSound.soundTransform = trans;
 			newSound.setChannel(channel);
 			newSound.registerPanUpdate(panFunc);
+			newSound.registerVolUpdate(volFunc);
 			//activePositionalSounds
 		}
 		
