@@ -201,8 +201,53 @@
 			return newSound;
 		}
 		
-		public function playSoundOClockPosition(angle:Number):MySound{
-			return playSoundPositional(Sounds.voice1oClockPosition, 1, patrickPan, 0, 0, null);
+		public function playSoundOClockPosition(angle:Number, pan:Number, callback:Function = null, delay:int = 0):MySound{
+			var oclockPos:int = ((angle-15)/360)*12;
+			if(oclockPos <= 0){
+				oclockPos = 12;
+			}
+			var soundEnum:int;
+			switch(oclockPos){
+				case 1:
+					soundEnum = Sounds.voice1oClockPosition;
+					break;
+				case 2:
+					soundEnum = Sounds.voice2oClockPosition;
+					break;
+				case 3:
+					soundEnum = Sounds.voice3oClockPosition;
+					break;
+				case 4:
+					soundEnum = Sounds.voice4oClockPosition;
+					break;
+				case 5:
+					soundEnum = Sounds.voice5oClockPosition;
+					break;
+				case 6:
+					soundEnum = Sounds.voice6oClockPosition;
+					break;
+				case 7:
+					soundEnum = Sounds.voice7oClockPosition;
+					break;
+				case 8:
+					soundEnum = Sounds.voice8oClockPosition;
+					break;
+				case 9:
+					soundEnum = Sounds.voice9oClockPosition;
+					break;
+				case 10:
+					soundEnum = Sounds.voice10oClockPosition;
+					break;
+				case 11:
+					soundEnum = Sounds.voice11oClockPosition;
+					break;
+				case 12:
+					soundEnum = Sounds.voice12oClockPosition;
+					break;
+				default:
+					break;
+			}
+			return playSoundPositional(soundEnum, 1, pan, 0, 0, callback, delay);
 		}
 		
 		/*public function playSoundVoice(soundEnum:int, callback:Function = null):MySound{
