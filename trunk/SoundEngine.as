@@ -6,6 +6,7 @@
 	import flash.media.SoundMixer; 
 	import flash.net.URLRequest; 
 	import flash.net.FileReference;
+	import flash.utils.ByteArray;
 	// Singleton class:
 	public class SoundEngine {
 		private static var instance:SoundEngine;
@@ -16,6 +17,7 @@
 		public var doneRequestingSounds:Boolean = false;
 		public var doneLoadingSounds:Boolean = false;
 		public var loadDoneCallback:Function;
+		//private var channelPanDict:Dictionary = new Dictionary();
 		public static function getInstance():SoundEngine {
 			if (instance == null) {
 				allowInstantiation = true;
@@ -53,7 +55,9 @@
 			var req:URLRequest = new URLRequest(fileLoc); 
 			snd.addEventListener(Event.COMPLETE, doLoadComplete);
 			snd.load(req);
-			sounds[sounds.length] = snd;
+			var mySound:MySound = new MySound(snd);
+			sounds.push(mySound);
+			//trace("Mysound in loadSound: " + mySound);
 		}
 		
 		public function update():void{
@@ -62,7 +66,6 @@
 		 
 		function doLoadComplete(evt:Event):void
 		{
-			
 			var sndURL:String =(evt.target as Sound).url;
 			//trace("sound.url: " + sndURL);
 			var finalURL:String = sndURL.substr(sndURL.lastIndexOf("/") + 1, sndURL.length);//bgmusicFileName.length);
@@ -88,20 +91,62 @@
 			//trace("playback complete");
 		}*/
 		
+		//soundEnum is like Sounds.___, plays it globally and flat
 		public function playSound(soundEnum:int):void{
-			//soundEnum is like Sounds.___, plays it globally and flat
-			sounds[soundEnum].play();
+			sounds[soundEnum].clone().sound.play();
 		}
 		
-		public function playSoundPositional(soundEnum:int, volume:Number = 1, panning:Number = 0, startTime:Number = 0, loops:int = 0):void{
+		//soundEnum is like Sounds.___
+		//volume 1 is full, 0 is muted
+		//panning must be a Number between -1 (left) and 1 (right) for the pan value
+		//startTime is the number of millis it skips at the start of the sound (if you want to start in the middle of the sound)
+		//loops is the number of times it loops the sound (0 to play once)
+		public function playSoundPositional(soundEnum:int, volume:Number = 1, panning:Number = 0,
+											startTime:Number = 0, loops:int = 0):void{
 			//soundEnum is like Sounds.___, plays it globally and flat
 			//always making a soundTransform when playing a sound may be inefficient
+			//trace("original mySound: " + sounds[soundEnum]);
+			var newSound:MySound = sounds[soundEnum].clone();
+			//var newSound:MySound = (clone(sounds[soundEnum])) as MySound;
+			//trace("newSound: " + newSound);
+			//trace("sound: " + newSound.sound);
 			var trans:SoundTransform;
 			trans = new SoundTransform(volume, panning); 
-			var channel:SoundChannel = sounds[soundEnum].play(startTime, loops);
+			var channel:SoundChannel = newSound.sound.play(startTime, loops);
 			channel.soundTransform = trans;
-			//should potentially be updating the channel with new trans data based on movement in update
-			//channel.addEventListener(Event.SOUND_COMPLETE, onPlaybackComplete); 
+			//newSound.soundTransform = trans;
+			newSound.channel = channel;
 		}
+		//soundEnum is like Sounds.___
+		//volume 1 is full, 0 is muted
+		//panFunc must return a Number between -1 (left) and 1 (right) for the pan value
+		//startTime is the number of millis it skips at the start of the sound (if you want to start in the middle of the sound)
+		//loops is the number of times it loops the sound (0 to play once)
+		public function playSoundPositionalUpdate(soundEnum:int, volume:Number, panFunc:Function, 
+												  startTime:Number = 0, loops:int = 0):void{
+			var newSound:MySound = sounds[soundEnum].clone();
+			var trans:SoundTransform;
+			trans = new SoundTransform(volume, panFunc()); 
+			var channel:SoundChannel = newSound.sound.play(startTime, loops);
+			channel.soundTransform = trans;
+			//channel.addEventListener(Event.ENTER_FRAME, channelPanUpdate);
+			//channel.addEventListener(Event.SOUND_COMPLETE, onChannelPanComplete);
+			//channelPanDict[channel] = panFunc;
+			//newSound.soundTransform = trans;
+			newSound.channel = channel;
+			newSound.registerPanUpdate(panFunc);
+			//activePositionalSounds
+		}
+		
+		//public function channelPanUpdate(evt:Event):void{
+			//(channelPanDict[channel] as Function)()
+		//}
+		
+		/*function clone(source:Object):* {
+			var copier:ByteArray = new ByteArray();
+			copier.writeObject(source);
+			copier.position = 0;
+			return(copier.readObject());
+		}*/
 	}
 }
