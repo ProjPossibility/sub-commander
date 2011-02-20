@@ -36,18 +36,14 @@
 			switch(currentMission) {
 				//0 is case for Position
 				case 0:
-					trace("plaing");
-					trace("second");
+					//trace("plaing");
+					//trace("second");
 					// spawn a new position target
-					var position:Position = new Position(main);
-					main.targets.push( position );
-					main.addChild( position );
+					spawnPosition();
 					break;
 				//1 is case for mine_instruction
 				case 1:
-					var mine:Mine = new Mine(main);
-					main.targets.push( mine );
-					main.addChild( mine );
+					spawnMine();
 					break;
 				//2 is case for mine
 				case 2:
@@ -62,7 +58,43 @@
 			currentIndex++;
 		}
 		
+		public function spawnPosition():void {
+			//How far away you want the targets to spawn
+			var dist:Number = main.stage.stageHeight/2 ;
+			var position:Position = new Position(main);
+			
+			var x:Number;
+			var y:Number;
+			var angle:Number;
+			angle = Math.random() * 2 * Math.PI;
+			//trace("angle: " + angle);
+			x = (Math.cos(angle) * dist) + main.submarine.x;
+			y = (Math.sin(angle) * dist) + main.submarine.y;
+			position.x = x;
+			position.y = y;
+			
+			main.targets.push( position );
+			main.addChild( position );
+		}
 		
+		public function spawnMine():void {
+			//How far away you want the targets to spawn
+			var dist:Number = main.stage.stageHeight/2 ;
+			var mine:Mine = new Mine(main);
+			
+			var x:Number;
+			var y:Number;
+			var angle:Number;
+			angle = Math.random() * 2 * Math.PI;
+			//trace("angle: " + angle);
+			x = (Math.cos(angle) * dist) + main.submarine.x;
+			y = (Math.sin(angle) * dist) + main.submarine.y;
+			mine.x = x;
+			mine.y = y;
+			
+			main.targets.push( mine );
+			main.addChild( mine );
+		}
 
 	}
 	
