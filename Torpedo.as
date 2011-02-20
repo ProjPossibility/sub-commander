@@ -30,7 +30,7 @@
 			xSpeed = speed*Math.cos(sub.rotation*Math.PI/180);
 			ySpeed = speed*Math.sin(sub.rotation*Math.PI/180);
 			
-			main.addChild(this);
+			main.gameLayer.addChild(this);
 			
 			addEventListener(Event.ENTER_FRAME, loop, false, 0, true);
 		}
@@ -71,8 +71,8 @@
 		private function removeSelf() : void
 		{
 			removeEventListener(Event.ENTER_FRAME, loop);
-			if (main.contains(this))
-				main.removeChild(this);
+			if (main.gameLayer.contains(this))
+				main.gameLayer.removeChild(this);
 		}
 	}
 }

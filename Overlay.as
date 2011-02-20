@@ -146,7 +146,7 @@
 			
 			if(myState == BUBBLES && waves1.deepBlue.currentFrameLabel == "endSubmerge" ) {
 				myState = GAME;
-				main.beginGame();	
+				main.beginGame();
 			}
 			if(myState == SURFACE && waves1.deepBlue.currentFrameLabel == "endSurface" ) {
 				timer = 150;
