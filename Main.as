@@ -58,6 +58,10 @@
 		{
 			oldRadar = newRadar;
 			newRadar+=18;
+			if(newRadar ==360)
+			{
+				newRadar =0;
+			}
 			for(var i:int = targets.length-1; i>=0; i--)
 			{
 				if(targets[i].angleFS > oldRadar && targets[i].angleFS <= newRadar)
