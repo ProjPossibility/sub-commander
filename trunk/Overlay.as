@@ -6,6 +6,9 @@
 	import flash.events.KeyboardEvent;
 	import flash.display.Stage;
 	
+	import flash.utils.Timer;
+	import flash.events.TimerEvent;
+	
 	public class Overlay extends MovieClip {
 
 		public var backGround:Sprite;
@@ -33,6 +36,10 @@
 		
 		public var main:Main;
 		
+		public var menuTimer:Timer;
+		public var counter:int = 0;
+		public var playingTutorial:Boolean = false;
+		
 		public function Overlay(main:Main) {
 			this.main = main;
 			backGround = new Sprite();
@@ -57,7 +64,12 @@
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
 			
-			myState = READYTOPLAY;
+			main.soundEngine.playSound(Sounds.voiceIntro);
+			
+			menuTimer = new Timer(500,1);
+			menuTimer.addEventListener(TimerEvent.TIMER, menuTimerHandler, false, 0, true);
+			menuTimer.start();
+			
 			
 			timer = 0;
 			
@@ -70,6 +82,7 @@
 		public function submerge():void {
 			myState = SUBMERGE;
 			timer = 150;
+			
 		}
 		
 		public function surface():void {
@@ -82,7 +95,15 @@
 		}
 		
 		public function update(e:Event):void {
-			
+			if(playingTutorial)
+			{
+				counter++;
+				if(counter >500)
+				{
+					playingTutorial = false;
+					submerge();
+				}
+			}
 			if(myState == SUBMERGE && timer > 0) {
 				timer--;
 				waves1.y -= 3;
@@ -172,10 +193,25 @@
 				}
 				else if (e.keyCode == 37)
 				{
-					submerge();
+					tutorial();
 				}
 			}
 		}
+		public function menuTimerHandler(e:TimerEvent):void
+		{
+			myState = READYTOPLAY;
+		}
+		public function tutorial() :void
+		{
+			playingTutorial = true;
+			main.soundEngine.playSoundPositional(Sounds.voicetutorial1, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.pingPosition, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorial2, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorial3, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.pingMine, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorial4, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.pingEnemy, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorial5, 1, 0);
+		}
 	}
-	
 }
