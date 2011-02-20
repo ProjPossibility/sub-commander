@@ -58,16 +58,17 @@
 		{
 			oldRadar = newRadar;
 			newRadar+=18;
-			if(newRadar ==360)
+			if(newRadar ==378)
 			{
-				newRadar =0;
+				oldRadar = 0
+				newRadar =18;
 			}
 			for(var i:int = targets.length-1; i>=0; i--)
 			{
 				if(targets[i].angleFS > oldRadar && targets[i].angleFS <= newRadar)
 				{
 					//trace("ping!");
-					soundEngine.playSoundPositionalUpdate(Sounds.ping, 1, targets[i].getPan);
+					soundEngine.playSoundPositionalUpdate(Sounds.ping, targets[i].getVolume(), targets[i].getPan);
 				}
 			}
 		}

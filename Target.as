@@ -8,6 +8,7 @@
 		public var distanceFS:Number;
 		public var angleFS:Number;
 		public var hearingAngleFS:Number;
+		public var hearingVolume:Number;
 		
 		public var main:Main;
 
@@ -15,6 +16,18 @@
 			distanceFS = 0; // distance is not square rooted for efficiency
 			angleFS = 0;
 			hearingAngleFS = 0;
+			hearingVolume = 0;
+		}
+		
+		public function getVolume():Number{
+			if (distanceFS <= 250000)
+			{
+				trace(hearingAngleFS);
+				hearingVolume = (250000-distanceFS)/250000;
+				return hearingVolume;
+			}
+			else
+				return 0;
 		}
 		
 		public function getPan():Number {
