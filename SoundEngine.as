@@ -115,6 +115,7 @@
 			var trans:SoundTransform;
 			trans = new SoundTransform(volume, panning); 
 			var channel:SoundChannel = newSound.sound.play(startTime, loops);
+			trace(channel);
 			channel.soundTransform = trans;
 			//newSound.soundTransform = trans;
 			newSound.setChannel(channel);
