@@ -41,7 +41,6 @@
 		public function Submarine(main:Main)
 		{
 			this.main = main;
-			mySound = Sounds.pingSub;
 		}
 
 		public function init():void
