@@ -22,6 +22,8 @@
 			soundEngine.loadAll(soundsLoaded);
 			StageClass.setStage(stage);
 			init();
+			missions = new Missions(this);
+			missions.init();
 		}
 		
 		public function init():void
@@ -45,8 +47,6 @@
 			submarine.x = stage.stageWidth/2;
 			submarine.y = stage.stageHeight/2;
 			
-			missions = new Missions(this);
-			missions.init();
 			//missions.currentIndex = 2;
 			//missions.advance();
 			
@@ -57,6 +57,16 @@
 			radarTimer.start();
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
+		}
+		
+		public function remove() :void
+		{
+			for(var i:int = targets.length-1; i>=0; i--) {
+				this.removeChild(targets[i]);
+				targets.splice(i,1);
+			}
+			radarTimer.stop();
+			this.removeEventListener(Event.ENTER_FRAME, update);
 		}
 		
 		public function update(e:Event):void {
