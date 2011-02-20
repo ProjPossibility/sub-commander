@@ -155,9 +155,9 @@
 					speed = maxSpeed;
 				}
 				engineVol+=0.005;
-				if(engineVol > 0.08)
+				if(engineVol > 0.1)
 				{
-					engineVol = 0.08;
+					engineVol = 0.1;
 				}
 			}
 			else
@@ -167,7 +167,7 @@
 				{
 					speed = 0;
 				}
-				engineVol-=0.005;
+				engineVol-=0.001;
 				if(engineVol < 0.02)
 				{
 					engineVol = 0.02;
@@ -248,19 +248,7 @@
 		}
 		public function explodeTimerHandler(e:TimerEvent):void
 		{
-			for (var i:int = main.targets.length-1; i>=0; i--)
-			{
-				//trace(main.targets[i].getPan());
-				if (main.targets[i].getPan() > -0.15 && main.targets[i].getPan() < 0.15)
-				{
-					main.soundEngine.playSoundPositional(Sounds.explosion, main.targets[i].getVolume(), main.targets[i].getPan());
-					if (main.contains(main.targets[i]))
-					{
-						main.removeChild(main.targets[i]);
-					}
-					main.targets.splice(i,1);
-				}
-			}
+			var torpedo:Torpedo = new Torpedo(main, this, this.x, this.y)
 			explodeTimer.stop();
 		}
 	}

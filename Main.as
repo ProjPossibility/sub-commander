@@ -93,7 +93,6 @@
 		
 		public function radarTimerHandler(e:TimerEvent):void
 		{
-			trace(oldRadar);
 			oldRadar = newRadar;
 			newRadar+=18;
 			if(newRadar ==378)
