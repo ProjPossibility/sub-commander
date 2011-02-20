@@ -19,6 +19,8 @@
 		public var loadDoneCallback:Function;
 		public var waveSound:MySound;
 		
+		private var voiceSounds:Array = new Array();
+		
 		public static var anoopPan:Number = 0; //pan values for speakers
 		public static var patrickPan:Number = .7;
 		public static var alexPan:Number = -.7;
@@ -148,7 +150,8 @@
 			newSound.setChannel(new SoundChannel());
 			newSound.setCallback(callback);
 			newSound.setDelay(delay);
-			newSound.sound.play();
+			newSound.playSound();
+			newSound.setSoundEnum(soundEnum);
 			return newSound;
 		}
 		
@@ -169,12 +172,14 @@
 			//trace("sound: " + newSound.sound);
 			var trans:SoundTransform;
 			trans = new SoundTransform(volume, panning); 
-			var channel:SoundChannel = newSound.sound.play(startTime, loops);
-			channel.soundTransform = trans;
+			//var channel:SoundChannel = 
+			newSound.playSound(startTime, loops, trans);
+			//channel.soundTransform = trans;
 			//newSound.soundTransform = trans;
-			newSound.setChannel(channel);
+			//newSound.setChannel(channel);
 			newSound.setCallback(callback);
 			newSound.setDelay(delay);
+			newSound.setSoundEnum(soundEnum);
 			return newSound;
 		}
 		//soundEnum is like Sounds.___
@@ -188,18 +193,68 @@
 			var newSound:MySound = sounds[soundEnum].clone();
 			var trans:SoundTransform;
 			trans = new SoundTransform(volFunc(), panFunc()); 
-			var channel:SoundChannel = newSound.sound.play(startTime, loops);
-			channel.soundTransform = trans;
+			/*var channel:SoundChannel = */
+			newSound.playSound(startTime, loops, trans);
+			//channel.soundTransform = trans;
 			//channel.addEventListener(Event.ENTER_FRAME, channelPanUpdate);
 			//channel.addEventListener(Event.SOUND_COMPLETE, onChannelPanComplete);
 			//channelPanDict[channel] = panFunc;
 			//newSound.soundTransform = trans;
-			newSound.setChannel(channel);
+			//newSound.setChannel(channel);
 			newSound.setCallback(callback);
 			newSound.setDelay(delay);
 			newSound.registerPanUpdate(panFunc);
 			newSound.registerVolUpdate(volFunc);
+			newSound.setSoundEnum(soundEnum);
 			return newSound;
+		}
+		
+		//only plays if this voice is not already playing
+		public function playVoicePassive(soundEnum:int, volume:Number = 1, panning:Number = 0,
+											startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
+			for(var i:int = 0; i < voiceSounds.length; i++){
+				if(voiceSounds.length > 0){
+					//if there is another voice sound, don't add me
+					return null;
+				}
+			}
+			return playSoundPositional(soundEnum, volume, panning, startTime, loops, callback, delay);
+		}
+		
+		//only plays if this voice is not already playing
+		public function playVoicePassiveUpdate(soundEnum:int, volFunc:Function, panFunc:Function, 
+												  startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
+			for(var i:int = 0; i < voiceSounds.length; i++){
+				if(voiceSounds.length > 0){
+					//if there is another voice sound, don't add me
+					return null;
+				}
+			}
+			return playSoundPositionalUpdate(soundEnum, volFunc, panFunc, startTime, loops, callback, delay);
+		}
+		
+		//cancels all other voice sounds
+		public function playVoiceAggressive(soundEnum:int, volume:Number = 1, panning:Number = 0,
+											startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
+			for(var i:int = 0; i < voiceSounds.length; i++){
+				if(voiceSounds.length > 0){
+					//if there is another voice sound, don't add me
+					return null;
+				}
+			}
+			return playSoundPositional(soundEnum, volume, panning, startTime, loops, callback, delay);
+		}
+		
+		//cancels all other voice sounds
+		public function playVoiceAgressiveUpdate(soundEnum:int, volFunc:Function, panFunc:Function, 
+												  startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
+			for(var i:int = 0; i < voiceSounds.length; i++){
+				if(voiceSounds.length > 0){
+					//if there is another voice sound, don't add me
+					return null;
+				}
+			}
+			return playSoundPositionalUpdate(soundEnum, volFunc, panFunc, startTime, loops, callback, delay);
 		}
 		
 		public function playSoundOClockPosition(angle:Number, pan:Number, callback:Function = null, delay:int = 0):MySound{
@@ -249,6 +304,33 @@
 					break;
 			}
 			return playSoundPositional(soundEnum, 1, pan, 0, 0, callback, delay);
+		}
+		
+		public function queueVoiceSound(snd:MySound){
+			for(var i:int = 0; i < voiceSounds.length; i++){
+				if((voiceSounds[i] as MySound).getSoundEnum() == snd.getSoundEnum()){
+					//if we are the same sound, don't add me
+					snd.terminate();
+					return;
+				}
+			}
+			trace("enqueue sound: " + snd.getSoundEnum());
+			voiceSounds.push(snd);
+			if(voiceSounds.length > 1){
+				snd.pause();
+				trace("pause sound: " + snd.getSoundEnum());
+			}
+		}
+		
+		public function voiceSoundEnded(snd:MySound){
+			trace("dequeue sound: " + snd.getSoundEnum());
+			if(voiceSounds[0] != snd){
+				trace("THESE SHOULD BE EQUAL, SOMETHING BAD HAPPENED IN SOUNDENGINE voiceSoundEnded");
+			}
+			voiceSounds.shift();
+			if(voiceSounds.length > 0){
+				voiceSounds[0].resume();
+			}
 		}
 		
 		/*public function playSoundVoice(soundEnum:int, callback:Function = null):MySound{

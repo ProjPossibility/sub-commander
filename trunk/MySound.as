@@ -12,12 +12,17 @@
 
 		public var sound:Sound;
 		//public var soundTransform:SoundTransform;
-		private var channel:SoundChannel;
-		private var panFunc:Function;
-		private var volFunc:Function;
-		private var callback:Function;
+		private var channel:SoundChannel = null;
+		private var panFunc:Function = null;
+		private var volFunc:Function = null;
+		private var callback:Function = null;
 		private var delay:int = 0;
+		private var soundEnum:int = -1;
+		private var startTime:Number = 0;
+		private var loops:int = 0;
 		private var t:Timer;
+		private var pausePos:int = 0;
+		private var paused = false;
 		
 		public function MySound(s:Sound) {
 			// constructor code
@@ -28,6 +33,67 @@
 		public function stop(){
 			channel.stop();
 			returnToCallback(null);
+		}
+		
+		public function terminate(){
+			channel.stop();
+			doCallback();
+		}
+		
+		public function pause(){
+			pausePos = channel.position;
+			channel.stop();
+			//trace("stopped channel of sound: " + soundEnum);
+			paused = true;
+		}
+		
+		public function resume(){
+			if(sound == null){
+				trace("WHY IS THE SOUND NULL?");
+			}
+			//trace("resumed channel of sound: " + soundEnum);
+			if(channel == null){
+				channel = sound.play(pausePos + startTime, loops);
+			} else {
+				channel = sound.play(pausePos + startTime, loops, channel.soundTransform);
+			}
+			channel.addEventListener(Event.SOUND_COMPLETE, returnToCallback);
+			pausePos = -1;
+			paused = false;
+		}
+		
+		public function playSound(startTime:Number = 0, loops:int = 0, sndTransform:SoundTransform = null):MySound{
+			this.startTime = startTime;
+			this.loops = loops;
+			/*if(sndTransform == null){
+				channel = new SoundChannel();
+				channel.soundTransform = new SoundTransform(1, 0);
+			} else {
+				channel = new SoundChannel();
+				channel.soundTransform = sndTransform;
+			}*/
+			channel = sound.play(startTime, loops, sndTransform);
+			channel.addEventListener(Event.SOUND_COMPLETE, returnToCallback);
+			return this;
+		}
+		
+		public function isVoiceSound(){
+			if(soundEnum > Sounds.voice1oClockPosition){
+				return true;
+			} else {
+				return false;
+			}
+		}
+		
+		public function setSoundEnum(s:int){
+			soundEnum = s;
+			if(isVoiceSound()){
+				SoundEngine.getInstance().queueVoiceSound(this);
+			}
+		}
+		
+		public function getSoundEnum(){
+			return soundEnum;
 		}
 		
 		public function setDelay(d:int){
@@ -43,6 +109,15 @@
 		}
 		
 		public function returnToCallback(evt:Event){
+			if(isVoiceSound()){
+				SoundEngine.getInstance().voiceSoundEnded(this);
+			}
+			
+			doCallback();
+			
+		}
+		
+		public function doCallback(){
 			if(callback == null){
 				return;
 			}
@@ -65,8 +140,12 @@
 		}
 		
 		public function panUpdate(evt:Event){
+			if(paused){
+				return;
+			}
 			//trace("old Pan: " + channel.soundTransform.pan + " new pan: " + panFunc());
 			//channel.soundTransform.pan = panFunc();
+			//trace("channel: " + channel + " panFunc: " + panFunc);
 			channel.soundTransform = new SoundTransform(channel.soundTransform.volume, panFunc());
 		}
 		
@@ -84,6 +163,9 @@
 		}
 		
 		public function volUpdate(evt:Event){
+			if(paused){
+				return;
+			}
 			//trace("old Pan: " + channel.soundTransform.pan + " new pan: " + panFunc());
 			//channel.soundTransform.pan = panFunc();
 			channel.soundTransform = new SoundTransform(volFunc(), channel.soundTransform.pan);
@@ -97,6 +179,10 @@
 		
 		public function setChannel(chan:SoundChannel){
 			channel = chan;
+		}
+		
+		public function getChannel():SoundChannel{
+			return channel;
 		}
 		
 		function clone(): MySound {

@@ -73,6 +73,7 @@
 		public function soundsLoaded():void{
 			trace("sounds loaded, allow game to start!");
 			//soundEngine.playSoundPositional(Sounds.ping, 0.5, -.5);
+			//soundEngine.playSoundOClockPosition(0, 0);
 			beginDescent();
 			//oClockTest();
 		}
