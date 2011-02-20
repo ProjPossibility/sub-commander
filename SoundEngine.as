@@ -73,7 +73,7 @@
 			trace("Sound loaded: " + finalURL);
 			if(finalURL  == bgmusicFileName){
 				//playSound(Sounds.waves);
-				playSoundPositional(Sounds.waves, 1, 0, 500);//skipping a half second of delay at the start
+				playSoundPositional(Sounds.waves, .3, 0, 500);//skipping a half second of delay at the start
 			}
 			//CAN'T UNLOAD ACTION LISTENER, POSSIBLY INEFFICIENT BUT ONLY ONCE FOR EACH SOUND
 			totalSoundsLoaded++;
@@ -116,7 +116,7 @@
 			var channel:SoundChannel = newSound.sound.play(startTime, loops);
 			channel.soundTransform = trans;
 			//newSound.soundTransform = trans;
-			newSound.channel = channel;
+			newSound.setChannel(channel);
 		}
 		//soundEnum is like Sounds.___
 		//volume 1 is full, 0 is muted
@@ -134,7 +134,7 @@
 			//channel.addEventListener(Event.SOUND_COMPLETE, onChannelPanComplete);
 			//channelPanDict[channel] = panFunc;
 			//newSound.soundTransform = trans;
-			newSound.channel = channel;
+			newSound.setChannel(channel);
 			newSound.registerPanUpdate(panFunc);
 			//activePositionalSounds
 		}
