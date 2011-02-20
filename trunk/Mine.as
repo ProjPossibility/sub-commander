@@ -6,8 +6,8 @@
 		
 		public function Mine(main:Main) {
 			this.main = main;
+			mySounds = Sounds.pingMine;
 		}
-
 	}
 	
 }
