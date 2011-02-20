@@ -60,7 +60,7 @@
 			newRadar+=18;
 			if(newRadar ==378)
 			{
-				oldRadar = 0
+				oldRadar = 0;
 				newRadar =18;
 			}
 			for(var i:int = targets.length-1; i>=0; i--)
