@@ -53,12 +53,12 @@
 			{
 				for (var i:int = main.targets.length-1; i>=0; i--)
 				{
-					if (hitTestObject(main.targets[i]))
+					if (hitTestObject(main.targets[i]) && (main.targets[i].getObjectName() == "Mine" || main.targets[i].getObjectName() == "Enemy") )
 					{
 						main.soundEngine.playSoundPositional(Sounds.explosion, main.targets[i].getVolume(), main.targets[i].getPan());
 						if (main.contains(main.targets[i]))
 						{
-							main.removeChild(main.targets[i]);
+							main.gameLayer.removeChild(main.targets[i]);
 						}
 						main.targets.splice(i,1);
 						removeSelf();

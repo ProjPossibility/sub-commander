@@ -17,6 +17,8 @@
 		public var currentMission:int;
 		public var currentIndex:int;
 		
+		public var canAdvance:Boolean = true;
+		
 		//Timer for when game ends
 		public var gameTimer:Timer;
 		
@@ -56,12 +58,13 @@
 		public function advance():void {
 			currentMission = missions[currentIndex];
 			//trace("Position: " + position);
-			//trace("Current Mission: " + currentMission);
-			switch(currentMission) {
+			trace("Current Mission: " + currentMission);
+			trace("Current index: " + currentIndex);
+			switch(currentIndex) {
 				//0 is case for tutorial
 				case 0:
 					tutorial();
-					advance();
+					//advance();
 					break;
 				//1 is case for descent
 				/*
@@ -74,18 +77,22 @@
 					//trace("plaing");
 					//trace("second");
 					// spawn a new position target
+					trace("Advance position");
 					spawnPosition(200, 200);
 					break;
 				//3 is case for mine
 				case 2:
 					mine();
+					trace("Advance mine");
 					break;
 				//4 is case for twoMines
 				case 3:
 					twoMines();
+					trace("Advance mine2");
 					break;
 				//5 is for enemySub
 				case 4:
+					trace("Advance enemySub");
 					enemySub();
 					break;
 				default:
@@ -93,14 +100,15 @@
 					win();
 					break;
 			}
-			
 			currentIndex++;
+			trace("Index increased now is: " + currentIndex);
 		}
 		
 		public function update():void {
 			if (currentIndex >= position) {
 				if (main.targets.length == 0) {
 					advance();
+					trace("Target length = 0, advancing");
 				}
 			}
 		}
@@ -115,6 +123,7 @@
 		
 		public function mine():void {
 			spawnMine(200, 200);
+			trace("Spawn 1st mine");
 			main.soundEngine.playSoundPositional(Sounds.voiceMineFieldWithinRange, 1, SoundEngine.patrickPan, 0, 0, commenceMineFieldDestruction, 1000);
 		}
 		
@@ -128,6 +137,8 @@
 		}
 		
 		public function win():void {
+			trace("You win");
+			currentIndex = 1;
 			main.overlay.surface();
 			main.remove();
 			main.init();
@@ -156,7 +167,7 @@
 			position.y = y;
 			
 			main.targets.push( position );
-			main.addChild( position );
+			main.gameLayer.addChild( position );
 		}
 		
 		public function spawnMine(minDist:Number, maxDist:Number):void {
@@ -175,7 +186,8 @@
 			mine.y = y;
 			
 			main.targets.push( mine );
-			main.addChild( mine );
+			trace(main.targets.length);
+			main.gameLayer.addChild( mine );
 		}
 		
 		public function spawnEnemy(minDist:Number, maxDist:Number):void {
@@ -193,7 +205,7 @@
 			enemy.y = y;
 			
 			main.targets.push( enemy );
-			main.addChild( enemy );
+			main.gameLayer.addChild( enemy );
 		}
 		
 		public function randNumber(low:Number, high:Number):Number {

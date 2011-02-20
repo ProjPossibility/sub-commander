@@ -78,6 +78,7 @@
 			doRotation();
 			doAcceleration();
 			checkTargets();
+			checkCollisions();
 			tick++;
 			if(tick%120 == 0)
 			{
@@ -329,7 +330,10 @@
 		public function checkCollisions():void {
 			for (var i:int = main.targets.length-1; i>=0; i--) {
 				if (this.hitTestObject(main.targets[i]) && main.targets[i].getObjectName() == "Position") {
-					main.targets.splice(i, 1);
+					main.gameLayer.removeChild(main.targets[i]);
+					main.targets.splice(i, 1); 
+					//main.missions.advance();
+					trace("Collied with position");
 				}
 			}
 		}
