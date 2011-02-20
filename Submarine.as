@@ -31,7 +31,6 @@
 		public var oldX:Number;
 
 		public var fireTimer:Timer;
-		public var explodeTimer:Timer;
 		private var canFire:Boolean = true;
 	
 		private var tick:int = 0;
@@ -55,11 +54,9 @@
 			spinSpeed = 0;
 			maxSpinSpeed = 4;
 
-			fireTimer = new Timer(400,1);
-			explodeTimer = new Timer(150,1);
+			fireTimer = new Timer(1500,1);
 			fireTimer.addEventListener(TimerEvent.TIMER, fireTimerHandler, false, 0, true);
-			explodeTimer.addEventListener(TimerEvent.TIMER, explodeTimerHandler, false, 0, true);
-
+			
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, keyPressed );
 			stage.addEventListener( KeyboardEvent.KEY_UP, keyReleased );
 			SoundEngine.getInstance().playSoundPositionalUpdate(Sounds.engine, getEngineVol, getZero, 0, int.MAX_VALUE);
@@ -230,27 +227,47 @@
 			oldX = stage.mouseX;
 			*/
 		}
+		
+		private function range() : Boolean
+		{
+			var inRange: Boolean = false;
+			for (var i:int = main.targets.length-1; i>=0; i--)
+			{
+				if(main.targets[i].distanceFS < 10000)
+					inRange = true;
+			}
+			if(inRange)
+			{
+				if(main.targets[i].getPan()> -0.15 && main.targets[i].getPan()< 0.15)
+					main.soundEngine.playSound(Sounds.voiceTargetDirectlyAhead);
+				else
+					main.soundEngine.playSound(Sounds.voiceTargetInRange);
+				return true;
+			}
+			else
+				return false;
+		}
+		
 
 		public function fire()
 		{
 			if (canFire)
 			{
-				main.soundEngine.playSoundPositional(Sounds.torpedoLaunch, 0.1, 0);
-				explodeTimer.start();
-				canFire = false;
-				fireTimer.start();
+				//if(range())
+				{
+					main.soundEngine.playSoundPositional(Sounds.torpedoLaunch, 0.1, 0);
+					canFire = false;
+					fireTimer.start();
+					main.soundEngine.playSound(Sounds.voiceWeaponsFired);
+					var torpedo:Torpedo = new Torpedo(main, this, this.x, this.y)
+				}
 			}
 		}
 
 		public function fireTimerHandler(e:TimerEvent):void
 		{
 			canFire = true;
-		}
-		public function explodeTimerHandler(e:TimerEvent):void
-		{
-			var torpedo:Torpedo = new Torpedo(main, this, this.x, this.y)
-			explodeTimer.stop();
+			main.soundEngine.playSound(Sounds.voiceWeaponsArmed);
 		}
 	}
-
 }
