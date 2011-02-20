@@ -65,7 +65,8 @@
 			var finalURL:String = sndURL.substr(sndURL.lastIndexOf("/") + 1, sndURL.length);//bgmusicFileName.length);
 			trace("Sound loaded: " + finalURL);
 			if(finalURL  == bgmusicFileName){
-				playSound(Sounds.waves, 500);//skipping a half second of delay at the start
+				//playSound(Sounds.waves);
+				playSoundPositional(Sounds.waves, 1, 0, 500);//skipping a half second of delay at the start
 			}
 			//CAN'T UNLOAD ACTION LISTENER, POSSIBLY INEFFICIENT BUT ONLY ONCE FOR EACH SOUND
 			totalSoundsLoaded++;
@@ -73,30 +74,31 @@
 				if(totalSoundsLoaded == sounds.length){
 					//we've requested all the sounds and loaded all of them
 					doneLoadingSounds = true;
-					trace("done loading sounds");
+					//trace("done loading sounds");
 					loadDoneCallback();
-					//playSound(Sounds.ambient);
-					//playSound(Sounds.ping);
 				}
 			}
-			//trace("Song loaded.");
-			//var trans:SoundTransform; 
-			//trans = new SoundTransform(1, 0); 
-			//var channel:SoundChannel = sounds[0].play(0, 20); 
-			//channel.addEventListener(Event.SOUND_COMPLETE, onPlaybackComplete); 
-			//sounds[0].play(0, 20);
 		}
 		
-		function onPlaybackComplete(event:Event):void 
+		/*function onPlaybackComplete(event:Event):void 
 		{ 
 			//trace("playback complete");
+		}*/
+		
+		public function playSound(soundEnum:int):void{
+			//soundEnum is like Sounds.___, plays it globally and flat
+			sounds[soundEnum].play();
 		}
 		
-		public function playSound(soundEnum:int, startTime:Number = 0, loops:int = 0):void{
-			//soundEnum is like Sounds.ping, this plays it globally and flat
-			//trace("awooga: " + soundEnum);
-			//trace(sounds[soundEnum]);
-			sounds[soundEnum].play(startTime, loops);
+		public function playSoundPositional(soundEnum:int, volume:Number = 1, panning:Number = 0, startTime:Number = 0, loops:int = 0):void{
+			//soundEnum is like Sounds.___, plays it globally and flat
+			//always making a soundTransform when playing a sound may be inefficient
+			var trans:SoundTransform;
+			trans = new SoundTransform(volume, panning); 
+			var channel:SoundChannel = sounds[soundEnum].play(startTime, loops);
+			channel.soundTransform = trans;
+			//should potentially be updating the channel with new trans data based on movement in update
+			//channel.addEventListener(Event.SOUND_COMPLETE, onPlaybackComplete); 
 		}
 	}
 }
