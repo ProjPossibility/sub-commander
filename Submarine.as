@@ -21,6 +21,7 @@
 		public var speed:Number;
 		public var maxSpeed:Number;
 		public var acceleration:Number;
+		public var engineVol:Number =0.05;
 
 		public var downRight:Boolean;
 		public var downLeft:Boolean;
@@ -70,6 +71,7 @@
 			doRotation();
 			doAcceleration();
 			checkTargets();
+			main.soundEngine.playSoundPositional(Sounds.engine, engineVol, 0);
 		}
 
 		public function checkTargets():void
@@ -138,6 +140,7 @@
 				{
 					speed = maxSpeed;
 				}
+				engineVol = speed/maxSpeed-0.8;
 			}
 			else
 			{
@@ -146,6 +149,7 @@
 				{
 					speed = 0;
 				}
+				engineVol = 0.05;
 			}
 			vX = Math.cos(rotation * Math.PI / 180) * speed;
 			vY = Math.sin(rotation * Math.PI / 180) * speed;
@@ -224,7 +228,7 @@
 		{
 			for (var i:int = main.targets.length-1; i>=0; i--)
 			{
-				trace(main.targets[i].getPan());
+				//trace(main.targets[i].getPan());
 				if (main.targets[i].getPan() > -0.15 && main.targets[i].getPan() < 0.15)
 				{
 					main.soundEngine.playSoundPositional(Sounds.explosion);
