@@ -15,6 +15,7 @@
 		public function Main() {
 			soundEngine = SoundEngine.getInstance();
 			soundEngine.loadAll(soundsLoaded);
+			StageClass.setStage(stage);
 			submarine = new Submarine(this);
 			targets = new Vector.<Target>();
 			var mine:Mine = new Mine(this);
