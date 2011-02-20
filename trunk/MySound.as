@@ -12,11 +12,29 @@
 		private var channel:SoundChannel;
 		private var panFunc:Function;
 		private var volFunc:Function;
+		private var callback:Function;
 		
 		public function MySound(s:Sound) {
 			// constructor code
 			sound = s;
 			//trace("sound in Mysound: " + sound);
+		}
+		
+		public function stop(){
+			channel.stop();
+		}
+		
+		public function setCallback(cb:Function){
+			if(cb == null){
+				return;
+			}
+			callback = cb;
+			channel.addEventListener(Event.SOUND_COMPLETE, returnToCallback);
+		}
+		
+		public function returnToCallback(evt:Event){
+			channel.removeEventListener(Event.SOUND_COMPLETE, returnToCallback);
+			callback();
 		}
 		
 		public function registerPanUpdate(panFunction:Function){

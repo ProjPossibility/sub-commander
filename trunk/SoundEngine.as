@@ -17,6 +17,7 @@
 		public var doneRequestingSounds:Boolean = false;
 		public var doneLoadingSounds:Boolean = false;
 		public var loadDoneCallback:Function;
+		public var waveSound:MySound;
 		public static function getInstance():SoundEngine {
 			if (instance == null) {
 				allowInstantiation = true;
@@ -73,7 +74,7 @@
 			var finalURL:String = sndURL.substr(sndURL.lastIndexOf("/") + 1, sndURL.length);//bgmusicFileName.length);
 			if(finalURL  == bgmusicFileName){
 				//playSound(Sounds.waves);
-				playSoundPositional(Sounds.waves, .3, 0, 500);//skipping a half second of delay at the start
+				waveSound = playSoundPositional(Sounds.waves, .3, 0, 500);//skipping a half second of delay at the start
 			}
 			//CAN'T UNLOAD ACTION LISTENER, POSSIBLY INEFFICIENT BUT ONLY ONCE FOR EACH SOUND
 			totalSoundsLoaded++;
@@ -87,14 +88,24 @@
 			}
 		}
 		
+		public function stopWaveSound(){
+			if(waveSound){
+				waveSound.stop();
+			}
+		}
+		
 		/*function onPlaybackComplete(event:Event):void 
 		{ 
 			//trace("playback complete");
 		}*/
 		
 		//soundEnum is like Sounds.___, plays it globally and flat
-		public function playSound(soundEnum:int):void{
-			sounds[soundEnum].clone().sound.play();
+		public function playSound(soundEnum:int, callback:Function = null):MySound{
+			var newSound:MySound = sounds[soundEnum].clone();
+			newSound.setChannel(new SoundChannel());
+			newSound.setCallback(callback);
+			newSound.sound.play();
+			return newSound;
 		}
 		
 		//soundEnum is like Sounds.___
@@ -103,7 +114,7 @@
 		//startTime is the number of millis it skips at the start of the sound (if you want to start in the middle of the sound)
 		//loops is the number of times it loops the sound (0 to play once)
 		public function playSoundPositional(soundEnum:int, volume:Number = 1, panning:Number = 0,
-											startTime:Number = 0, loops:int = 0):void{
+											startTime:Number = 0, loops:int = 0, callback:Function = null):MySound{
 			//soundEnum is like Sounds.___, plays it globally and flat
 			//always making a soundTransform when playing a sound may be inefficient
 			//trace("original mySound: " + sounds[soundEnum]);
@@ -117,6 +128,8 @@
 			channel.soundTransform = trans;
 			//newSound.soundTransform = trans;
 			newSound.setChannel(channel);
+			newSound.setCallback(callback);
+			return newSound;
 		}
 		//soundEnum is like Sounds.___
 		//volume 1 is full, 0 is muted
@@ -124,7 +137,7 @@
 		//startTime is the number of millis it skips at the start of the sound (if you want to start in the middle of the sound)
 		//loops is the number of times it loops the sound (0 to play once)
 		public function playSoundPositionalUpdate(soundEnum:int, volFunc:Function, panFunc:Function, 
-												  startTime:Number = 0, loops:int = 0):void{
+												  startTime:Number = 0, loops:int = 0, callback:Function = null):MySound{
 			var newSound:MySound = sounds[soundEnum].clone();
 			var trans:SoundTransform;
 			trans = new SoundTransform(volFunc(), panFunc()); 
@@ -135,9 +148,14 @@
 			//channelPanDict[channel] = panFunc;
 			//newSound.soundTransform = trans;
 			newSound.setChannel(channel);
+			newSound.setCallback(callback);
 			newSound.registerPanUpdate(panFunc);
 			newSound.registerVolUpdate(volFunc);
-			//activePositionalSounds
+			return newSound;
+		}
+		
+		public function playSoundVoice(soundEnum:int, callback:Function = null):MySound{
+			return playSoundPositional(soundEnum, 1, .7, 0, 0, null);
 		}
 		
 		//public function channelPanUpdate(evt:Event):void{
