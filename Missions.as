@@ -4,9 +4,11 @@
 		
 		public var missions:Array;
 		
-		public static var position:int = 0;
-		public static var mine_with_instruction:int = 1;
-		public static var mine:int = 2;
+		public static var tutorial:int = 0;
+		public static var descent:int = 1;
+		public static var position:int = 2;
+		public static var mine_with_instruction:int = 3;
+		public static var mine:int = 4;
 		
 		public var currentMission:int;
 		public var currentIndex:int;
@@ -19,6 +21,8 @@
 			missions = new Array();
 			missions =
 			[
+			 	tutorial,
+				descent,
 				position,
 				mine_with_instruction,
 				mine
@@ -34,21 +38,28 @@
 			//trace("Position: " + position);
 			//trace("Current Mission: " + currentMission);
 			switch(currentMission) {
-				//0 is case for Position
+				//0 is case for tutorial
 				case 0:
+					break;
+				//1 is case for descent
+				case 1:
+					descent();
+					break;
+				//2 is case for Position
+				case 2:
 					//trace("plaing");
 					//trace("second");
 					// spawn a new position target
-					spawnPosition();
+					spawnPosition(200, 200);
 					break;
-				//1 is case for mine_instruction
-				case 1:
-					spawnMine();
+				//3 is case for mine_instruction
+				case 3:
+					spawnMine(200, 200);
 					main.soundEngine.playSoundPositional(Sounds.voiceMineFieldWithinRange, 1, SoundEngine.patrickPan, 0, 0, commenceMineFieldDestruction, 1000);
 					break;
-				//2 is case for mine
-				case 2:
-					spawnMine();
+				//4 is case for mine
+				case 4:
+					spawnMine(200, 200);
 					main.soundEngine.playSoundPositional(Sounds.voiceAnotherMine, 1, SoundEngine.patrickPan, 0, 0, null, 0);
 					break;
 				default:
@@ -58,9 +69,17 @@
 			currentIndex++;
 		}
 		
-		public function spawnPosition():void {
+		public function tutorial():void {
+			
+		}
+		
+		public function descent():void {
+			beginDescent();
+		}
+		
+		public function spawnPosition(minDist:Number, maxDist:Number):void {
 			//How far away you want the targets to spawn
-			var dist:Number = main.stage.stageHeight/2 ;
+			//var dist:Number = main.stage.stageHeight/2 ;
 			var position:Position = new Position(main);
 			
 			var x:Number;
@@ -68,8 +87,8 @@
 			var angle:Number;
 			angle = Math.random() * 2 * Math.PI;
 			//trace("angle: " + angle);
-			x = (Math.cos(angle) * dist) + main.submarine.x;
-			y = (Math.sin(angle) * dist) + main.submarine.y;
+			x = (Math.cos(angle) * randNumber(minDist, maxDist) ) + main.submarine.x;
+			y = (Math.sin(angle) * randNumber(minDist, maxDist) ) + main.submarine.y;
 			position.x = x;
 			position.y = y;
 			
@@ -77,9 +96,9 @@
 			main.addChild( position );
 		}
 		
-		public function spawnMine():void {
+		public function spawnMine(minDist:Number, maxDist:Number):void {
 			//How far away you want the targets to spawn
-			var dist:Number = main.stage.stageHeight/2 ;
+			//var dist:Number = main.stage.stageHeight/2 ;
 			var mine:Mine = new Mine(main);
 			
 			var x:Number;
@@ -87,8 +106,8 @@
 			var angle:Number;
 			angle = Math.random() * 2 * Math.PI;
 			//trace("angle: " + angle);
-			x = (Math.cos(angle) * dist) + main.submarine.x;
-			y = (Math.sin(angle) * dist) + main.submarine.y;
+			x = (Math.cos(angle) * randNumber(minDist, maxDist) ) + main.submarine.x;
+			y = (Math.sin(angle) * randNumber(minDist, maxDist) ) + main.submarine.y;
 			mine.x = x;
 			mine.y = y;
 			
@@ -96,8 +115,8 @@
 			main.addChild( mine );
 		}
 		
-		public function spawnEnemy():void {
-			var dist:Number = main.stage.stageHeight/2 ;
+		public function spawnEnemy(minDist:Number, maxDist:Number):void {
+			//var dist:Number = main.stage.stageHeight/2 ;
 			var enemy = new Enemy(main, 50, 100);
 			
 			var x:Number;
@@ -105,13 +124,37 @@
 			var angle:Number;
 			angle = Math.random() * 2 * Math.PI;
 			//trace("angle: " + angle);
-			x = (Math.cos(angle) * dist) + main.submarine.x;
-			y = (Math.sin(angle) * dist) + main.submarine.y;
+			x = (Math.cos(angle) * randNumber(minDist, maxDist) ) + main.submarine.x;
+			y = (Math.sin(angle) * randNumber(minDist, maxDist) ) + main.submarine.y;
 			enemy.x = x;
 			enemy.y = y;
 			
 			main.targets.push( enemy );
 			main.addChild( enemy );
+		}
+		
+		public function randNumber(low:Number, high:Number):Number {
+			var num:Number;
+			
+			num = (Math.random() * (high-low)) + low;
+			
+			return num;
+		}
+		
+		public function beginDescent():void{
+			main.soundEngine.stopWaveSound();//dive, diveDepths, diveDepthReached
+			//soundEngine.playSoundVoice(Sounds.voiceCommenceDescent, diveSoundEnd);
+			main.soundEngine.playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
+		}
+		
+		public function diveSoundEnd():void{
+			//soundEngine.playSoundVoice(Sounds.voiceDepthMeters, diveDepthReached);
+			main.soundEngine.playSoundPositional(Sounds.voiceDepthMeters, 1, SoundEngine.anoopPan, 0, 0, diveDepthReached, 1000);
+		}
+		
+		public function diveDepthReached():void{
+			//soundEngine.playSoundVoice(Sounds.voiceOptimalDepthReached, beginMission);
+			main.soundEngine.playSoundPositional(Sounds.voiceOptimalDepthReached, 1, SoundEngine.anoopPan, 0, 0, main.beginMission);
 		}
 		
 		public function commenceMineFieldDestruction():void {

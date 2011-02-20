@@ -43,7 +43,8 @@
 			
 			missions = new Missions(this);
 			missions.init();
-			//missions.advance();
+			missions.currentIndex = 2;
+			missions.advance();
 			
 			radarTimer = new Timer(80,1);
 			radarTimer.addEventListener(TimerEvent.TIMER, radarTimerHandler, false, 0, true);
@@ -114,6 +115,5 @@
 				}
 			}
 		}
-		
 	}
 }
