@@ -18,15 +18,14 @@
 		public var newRadar:Number;
 		
 		public function Main() {
+			soundEngine = SoundEngine.getInstance();
+			soundEngine.loadAll(soundsLoaded);
+			StageClass.setStage(stage);
 			init();
 		}
 		
 		public function init():void
 		{
-			soundEngine = SoundEngine.getInstance();
-			soundEngine.loadAll(soundsLoaded);
-			StageClass.setStage(stage);
-			
 			submarine = new Submarine(this);
 			enemy = new Enemy(this, 50, 100);
 			
