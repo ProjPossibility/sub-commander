@@ -32,6 +32,8 @@
 
 		public var fireTimer:Timer;
 		private var canFire:Boolean = true;
+		private var inRange:Boolean = true;;
+		private var checkedRange:Boolean = false; //make sure the voice for range is not called several times
 	
 		private var tick:int = 0;
 		//public var timeSinceMoved
@@ -52,9 +54,9 @@
 
 			oldX = 0;
 			spinSpeed = 0;
-			maxSpinSpeed = 4;
+			maxSpinSpeed = 3;
 
-			fireTimer = new Timer(1500,1);
+			fireTimer = new Timer(2000,1);
 			fireTimer.addEventListener(TimerEvent.TIMER, fireTimerHandler, false, 0, true);
 			
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, keyPressed );
@@ -73,6 +75,10 @@
 			doAcceleration();
 			checkTargets();
 			tick++;
+			if(tick%120 == 0)
+			{
+				range();
+			}
 		}
 		
 		public function getEngineVol(): Number
@@ -115,6 +121,7 @@
 				// 90  - 180 = all right ear
 				// 180 - 270 = all left ear
 				// 270 - 360 = mostly left ear
+				
 			}
 		}
 
@@ -228,24 +235,32 @@
 			*/
 		}
 		
+		
 		private function range() : Boolean
 		{
-			var inRange: Boolean = false;
 			for (var i:int = main.targets.length-1; i>=0; i--)
 			{
-				if(main.targets[i].distanceFS < 10000)
+				
+				if(main.targets[i].distanceFS < 250000 &&(main.targets[i].hearingAngleFS < 75 || main.targets[i].hearingAngleFS > 295))
+				{
 					inRange = true;
-			}
-			if(inRange)
-			{
-				if(main.targets[i].getPan()> -0.15 && main.targets[i].getPan()< 0.15)
-					main.soundEngine.playSound(Sounds.voiceTargetDirectlyAhead);
+					if(!checkedRange)
+					{
+						checkedRange = true;
+						if(main.targets[i].hearingAngleFS < 15 || main.targets[i].hearingAngleFS > 345)
+							main.soundEngine.playSoundPositional(Sounds.voiceTargetDirectlyAhead, 1, SoundEngine.alexPan);
+						else
+							main.soundEngine.playSoundPositional(Sounds.voiceTargetInRange, 1, SoundEngine.alexPan);
+					}
+					return true;
+				}
 				else
-					main.soundEngine.playSound(Sounds.voiceTargetInRange);
-				return true;
+				{
+					inRange = false;
+					checkedRange = false;
+				}
 			}
-			else
-				return false;
+			return false;
 		}
 		
 
@@ -253,13 +268,18 @@
 		{
 			if (canFire)
 			{
-				//if(range())
+				checkedRange = true;
+				if(range())
 				{
 					main.soundEngine.playSoundPositional(Sounds.torpedoLaunch, 0.1, 0);
 					canFire = false;
 					fireTimer.start();
-					main.soundEngine.playSound(Sounds.voiceWeaponsFired);
+					main.soundEngine.playSoundPositional(Sounds.voiceWeaponsFired, 1, SoundEngine.alexPan);
 					var torpedo:Torpedo = new Torpedo(main, this, this.x, this.y)
+				}
+				else
+				{
+					main.soundEngine.playSoundPositional(Sounds.voiceNoRange, 1, SoundEngine.alexPan);
 				}
 			}
 		}
@@ -268,6 +288,7 @@
 		{
 			canFire = true;
 			main.soundEngine.playSound(Sounds.voiceWeaponsArmed);
+			main.soundEngine.playSoundPositional(Sounds.voiceWeaponsArmed, 1, SoundEngine.alexPan);
 		}
 	}
 }
