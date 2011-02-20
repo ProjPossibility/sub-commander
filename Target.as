@@ -22,7 +22,6 @@
 		public function getVolume():Number{
 			if (distanceFS <= 250000)
 			{
-				trace(hearingAngleFS);
 				hearingVolume = (250000-distanceFS)/250000;
 				return hearingVolume;
 			}
