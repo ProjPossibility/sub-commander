@@ -295,7 +295,6 @@
 		public function fireTimerHandler(e:TimerEvent):void
 		{
 			canFire = true;
-			main.soundEngine.playSound(Sounds.voiceWeaponsArmed);
 			main.soundEngine.playSoundPositional(Sounds.voiceWeaponsArmed, 1, SoundEngine.alexPan);
 		}
 	}
