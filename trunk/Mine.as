@@ -2,10 +2,8 @@
 	
 	import flash.display.MovieClip;
 	
-	public class Mine extends MovieClip {
-
-		public var main:Main;
-
+	public class Mine extends Target {
+		
 		public function Mine(main:Main) {
 			this.main = main;
 		}
