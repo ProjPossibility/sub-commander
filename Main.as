@@ -42,12 +42,12 @@
 			for(var i:int = targets.length-1; i>=0; i--) {
 				targets[i].update();
 			}
-			
+			//soundEngine.playSoundPositional(Sounds.ping, 0.5, -.5);
 		}
 		
 		public function soundsLoaded():void{
 			trace("sounds loaded, allow game to start!");
-			soundEngine.playSoundPositional(Sounds.engine, 1, -.5);
+			//soundEngine.playSoundPositional(Sounds.ping, 0.5, -.5);
 		}
 	}
 	
