@@ -78,7 +78,7 @@
 		}
 		
 		public function isVoiceSound(){
-			if(soundEnum > Sounds.voice1oClockPosition){
+			if(soundEnum >= Sounds.voice1oClockPosition && soundEnum <= Sounds.voiceWeaponsFired){
 				return true;
 			} else {
 				return false;
