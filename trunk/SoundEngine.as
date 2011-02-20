@@ -50,7 +50,7 @@
 			bgmusicFileName = "waves01.mp3";
 			loadSound("Audio/Sound/Sonar/Sonar01.mp3");//Sounds.PingPosition = 1
 			loadSound("Audio/Sound/Sonar/Sonar02.mp3");//Sounds.pingMine = 2
-			loadSound("Audio/Sound/Sonar/Sonar02.mp3");//Sounds.pingEnemy = 3
+			loadSound("Audio/Sound/Sonar/Sonar03.mp3");//Sounds.pingEnemy = 3
 			loadSound("Audio/Sound/Underwater/Underwater04.mp3");//Sounds.Underwater = 4
 			loadSound("Audio/Sound/Engine/dieselEngine01.mp3");//Sounds.engine = 5
 			loadSound("Audio/Sound/Alarm/Klaxon01.mp3");//Sounds.klaxon = 6
