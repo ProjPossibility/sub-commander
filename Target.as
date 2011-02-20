@@ -9,7 +9,7 @@
 		public var angleFS:Number;
 		public var hearingAngleFS:Number;
 		public var hearingVolume:Number;
-		public var mySound:Sounds;
+		public var mySound:int;
 		
 		public var main:Main;
 
@@ -20,9 +20,9 @@
 			hearingVolume = 0;
 		}
 		
-		public function get Sound(): Sounds
+		public function getSound(): int
 		{
-			return mySound
+			return mySound;
 		}
 		
 		public function getVolume():Number{
