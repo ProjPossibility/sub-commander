@@ -17,6 +17,10 @@
 		public var oldRadar:Number;
 		public var newRadar:Number;
 		
+		public var gameStart:Boolean = false;
+		
+		public var overlay:Overlay;
+		
 		public function Main() {
 			soundEngine = SoundEngine.getInstance();
 			soundEngine.loadAll(soundsLoaded);
@@ -59,6 +63,13 @@
 			radarTimer.start();
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
+			
+			// overlay
+			overlay = new Overlay();
+			this.addChild(overlay);
+			overlay.init();
+			//uncomment to use debug
+			//overlay.visible = false;
 		}
 		
 		public function remove() :void
@@ -75,18 +86,21 @@
 			//trace("sup");
 			soundEngine.update();
 			//soundEngine.playSound(Sounds.ping);
-			submarine.update();
-			for(var i:int = targets.length-1; i>=0; i--) {
-				targets[i].update();
+			
+			//if the game has started, update all game objects
+			if(gameStart) {
+				submarine.update();
+				for(var i:int = targets.length-1; i>=0; i--) {
+					targets[i].update();
+				}
+				radarTimer.start();
 			}
-			//radarTimer.start();
 		}
 		
 		public function soundsLoaded():void{
 			trace("sounds loaded, allow game to start!");
 			//soundEngine.playSoundPositional(Sounds.ping, 0.5, -.5);
-			//soundEngine.playSoundOClockPosition(0, 0);
-			beginDescent();
+			//beginDescent();
 			//oClockTest();
 		}
 		
