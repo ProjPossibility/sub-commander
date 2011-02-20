@@ -1,17 +1,18 @@
 ﻿package  {
 	import flash.utils.Timer;
 	import flash.events.TimerEvent;
+	import flash.events.Event;
 	
 	public class Missions {
 		
 		public var missions:Array;
 		
 		public static var tutorial:int = 0;
-		public static var descent:int = 1;
-		public static var position:int = 2;
-		public static var mine:int = 3;
-		public static var twoMines:int = 4;
-		public static var enemySub:int = 5;
+		//public static var descent:int = 1;
+		public static var position:int = 1;
+		public static var mine:int = 2;
+		public static var twoMines:int = 3;
+		public static var enemySub:int = 4;
 		
 		public var currentMission:int;
 		public var currentIndex:int;
@@ -28,7 +29,7 @@
 			missions =
 			[
 			 	tutorial,
-				descent,
+				//descent,
 				position,
 				mine,
 				twoMines, 
@@ -39,11 +40,12 @@
 		public function init():void {
 			currentIndex = 0;
 			//4 minute timer
-			gameTimer = new Timer(240000, 0);
-			gameTimer.addEventListener(TimerEvent.TIMER, gameOver, false, 0, true);
+			gameTimer = new Timer(3000, 0);
+			gameTimer.addEventListener(TimerEvent.TIMER, gameOver);
 		}
 		
 		public function startGame():void {
+			currentIndex = 1;
 			gameTimer.start();
 		}
 		
@@ -57,26 +59,28 @@
 					tutorial();
 					break;
 				//1 is case for descent
+				/*
 				case 1:
 					descent();
 					break;
+				*/
 				//2 is case for Position
-				case 2:
+				case 1:
 					//trace("plaing");
 					//trace("second");
 					// spawn a new position target
 					spawnPosition(200, 200);
 					break;
 				//3 is case for mine
-				case 3:
+				case 2:
 					mine();
 					break;
 				//4 is case for twoMines
-				case 4:
+				case 3:
 					twoMines();
 					break;
 				//5 is for enemySub
-				case 5:
+				case 4:
 					enemySub();
 					break;
 				default:
@@ -111,11 +115,14 @@
 		}
 		
 		public function win():void {
-			
+			main.remove();
+			main.init();
 		}
 		
-		public function gameOver():void {
-			
+		public function gameOver(e:TimerEvent):void {
+			main.remove();
+			main.init();
+			trace("Game over, player ran out of time");
 		}
 		
 		public function spawnPosition(minDist:Number, maxDist:Number):void {
@@ -190,7 +197,9 @@
 		
 		public function diveSoundEnd():void{
 			//soundEngine.playSoundVoice(Sounds.voiceDepthMeters, diveDepthReached);
+			//main.soundEngine.playSoundPositionalUpdate(Sounds.
 			main.soundEngine.playSoundPositional(Sounds.voiceDepthMeters, 1, SoundEngine.anoopPan, 0, 0, diveDepthReached, 1000);
+			//main.soundEngine.playSoundPositionalUpdate(Sounds.dolphin, 1, 
 		}
 		
 		public function diveDepthReached():void{

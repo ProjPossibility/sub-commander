@@ -24,6 +24,7 @@
 			init();
 			missions = new Missions(this);
 			missions.init();
+			missions.startGame();
 		}
 		
 		public function init():void
@@ -46,6 +47,7 @@
 			submarine.init();
 			submarine.x = stage.stageWidth/2;
 			submarine.y = stage.stageHeight/2;
+			
 			
 			//missions.currentIndex = 2;
 			//missions.advance();

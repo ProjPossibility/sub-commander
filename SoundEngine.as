@@ -94,6 +94,8 @@
 			loadSound("Audio/Voice/weaponsArmed.mp3");//Sounds.voice
 			//Re-record this one below
 			loadSound("Audio/Voice/weaponsFired.mp3");//Sounds.voice
+			//End of voices
+			loadSound("Audio/Sound/Animals/dolphin01.mp3");//Sounds.dolphin = 42
 			doneRequestingSounds = true;
 		}
 		

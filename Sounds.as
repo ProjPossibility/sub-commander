@@ -48,7 +48,8 @@
 		public static const voiceWeaponsArmed:int = 40;
 		public static const voiceWeaponsFired:int = 41;
 		
-		
+		//End of voices
+		public static const dolphin:int = 42;
 		public function Sounds() {
 			// constructor code
 		}
