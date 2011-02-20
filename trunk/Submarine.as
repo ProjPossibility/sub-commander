@@ -11,6 +11,9 @@
 
 	public class Submarine extends MovieClip
 	{
+		public var rightRudderDelay:int = 0;
+		public var leftRudderDelay:int = 0;
+		public static var framesBetweenRudderCommands:int = 60;
 
 		public var main:Main;
 		public var vX:Number;
@@ -79,7 +82,16 @@
 			if(tick%120 == 0)
 			{
 				checkedRange = false;
-				range();
+			}
+			range();
+			
+			leftRudderDelay -= 1;
+			if(leftRudderDelay <= 0){
+				leftRudderDelay = 0;
+			}
+			rightRudderDelay -= 1;
+			if(rightRudderDelay <= 0){
+				rightRudderDelay = 0;
 			}
 		}
 		
@@ -134,7 +146,10 @@
 				spinSpeed = maxSpinSpeed;
 				if(!turning)
 				{
-					main.soundEngine.playVoicePassive(Sounds.voiceRightFullRudder, 1, SoundEngine.anoopPan);
+					if(rightRudderDelay == 0){
+						main.soundEngine.playVoicePassive(Sounds.voiceRightFullRudder, 0, 1, SoundEngine.anoopPan);
+						rightRudderDelay = framesBetweenRudderCommands;
+					}
 					turning = true;
 				}
 			}
@@ -143,7 +158,10 @@
 				spinSpeed =  -  maxSpinSpeed;
 				if(!turning)
 				{
-					main.soundEngine.playVoicePassive(Sounds.voiceLeftFullRudder, 1, SoundEngine.anoopPan);
+					if(leftRudderDelay == 0){
+						main.soundEngine.playVoicePassive(Sounds.voiceLeftFullRudder, 0, 1, SoundEngine.anoopPan);
+						leftRudderDelay = framesBetweenRudderCommands;
+					}
 					turning = true;
 				}
 			}
@@ -286,7 +304,7 @@
 		{
 			if (canFire)
 			{
-				checkedRange = true;
+				//checkedRange = true;
 				if(range())
 				{
 					main.soundEngine.playSoundPositional(Sounds.torpedoLaunch, 0.1, 0);

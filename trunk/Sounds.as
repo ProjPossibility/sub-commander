@@ -50,6 +50,20 @@
 		
 		//End of voices
 		public static const dolphin:int = 42;
+		
+		//More voices
+		public static const voiceIntro:int = 43;
+		public static const voicetutorial1:int = 44;
+		public static const voicetutorial2:int = 45;
+		public static const voicetutorial3:int = 46;
+		public static const voicetutorial4:int = 47;
+		public static const voicetutorial5:int = 48;
+		public static const voicetutorialBehind:int = 49;
+		public static const voicetutorialClose:int = 50;
+		public static const voicetutorialFinal:int = 51;
+		public static const voicetutorialFront:int = 52;
+		public static const voicetutorialLeft:int = 53;
+		public static const voicetutorialRight:int = 54;
 		public function Sounds() {
 			// constructor code
 		}
