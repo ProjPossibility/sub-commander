@@ -90,6 +90,7 @@
 			loadSound("Audio/Voice/targetMissed.mp3");//Sounds.voice
 			loadSound("Audio/Voice/tubesReadytoFire.mp3");//Sounds.voice
 			loadSound("Audio/Voice/weaponsArmed.mp3");//Sounds.voice
+			//Re-record this one below
 			loadSound("Audio/Voice/weaponsFired.mp3");//Sounds.voice
 			doneRequestingSounds = true;
 		}
