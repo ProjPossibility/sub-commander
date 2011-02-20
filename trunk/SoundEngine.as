@@ -18,6 +18,11 @@
 		public var doneLoadingSounds:Boolean = false;
 		public var loadDoneCallback:Function;
 		public var waveSound:MySound;
+		
+		public var anoopPan:Number = 0; //pan values for speakers
+		public var patrickPan:Number = .7;
+		public var alexPan:Number = -.7;
+		
 		public static function getInstance():SoundEngine {
 			if (instance == null) {
 				allowInstantiation = true;
@@ -26,6 +31,7 @@
 			}
 			return instance;
 		}
+		
 		public function SoundEngine():void {
 			if (!allowInstantiation) {
 				throw new Error("Error: Instantiation failed: Use SingletonDemo.getInstance() instead of new.");
@@ -190,7 +196,28 @@
 		}
 		
 		public function playSoundVoice(soundEnum:int, callback:Function = null):MySound{
-			return playSoundPositional(soundEnum, 1, .7, 0, 0, null);
+			return playSoundPositional(soundEnum, 1, anoopPan, 0, 0, callback);
+			/*if(soundEnum == Sounds.SOMEANOOPTALK){
+				return playSoundPositional(soundEnum, 1, anoopPan, 0, 0, null);
+			} else if(soundEnum == Sounds.SOMEANOOPTALK2){
+				return playSoundPositional(soundEnum, 1, anoopPan, 0, 0, null);
+			}
+			
+			switch(soundEnum){
+				case Sounds.SOMEANOOPTALK:
+				case Sounds.SOMEANOOPTALK2:
+				case Sounds.SOMEANOOPTALK3:
+					return playSoundPositional(soundEnum, 1, anoopPan, 0, 0, null);
+					break;
+				case Sounds.SOMEPATRICKTALK:
+					return playSoundPositional(soundEnum, 1, patrickPan, 0, 0, null);
+					break;
+					case Sounds.SOMEALEXTALK:
+					return playSoundPositional(soundEnum, 1, alexPan, 0, 0, null);
+					break;
+				default:
+					break;
+			}*/
 		}
 		
 		//public function channelPanUpdate(evt:Event):void{

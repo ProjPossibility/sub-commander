@@ -17,10 +17,6 @@
 		public var oldRadar:Number;
 		public var newRadar:Number;
 		
-		public var anoopPan:Number = 0; //pan values for speakers
-		public var patrickPan:Number = .7;
-		public var alexPan:Number = -.7;
-		
 		public function Main() {
 			soundEngine = SoundEngine.getInstance();
 			soundEngine.loadAll(soundsLoaded);
@@ -72,20 +68,23 @@
 		public function soundsLoaded():void{
 			trace("sounds loaded, allow game to start!");
 			//soundEngine.playSoundPositional(Sounds.ping, 0.5, -.5);
-			//beginDescent();
+			beginDescent();
 		}
 		
 		public function beginDescent():void{
 			soundEngine.stopWaveSound();//dive, diveDepths, diveDepthReached
-			soundEngine.playSoundPositional(Sounds.klaxon, 1, anoopPan, 0, 0, diveSoundEnd);
+			soundEngine.playSoundVoice(Sounds.voiceCommenceDescent, diveSoundEnd);
+			//soundEngine.playSoundPositional(Sounds.klaxon, 1, anoopPan, 0, 0, diveSoundEnd);
 		}
 		
 		public function diveSoundEnd():void{
-			soundEngine.playSoundPositional(Sounds.pingMine, 1, anoopPan, 0, 0, diveDepthReached);
+			soundEngine.playSoundVoice(Sounds.voiceDepthMeters, diveDepthReached);
+			//soundEngine.playSoundPositional(Sounds.pingMine, 1, anoopPan, 0, 0, diveDepthReached);
 		}
 		
 		public function diveDepthReached():void{
-			soundEngine.playSoundPositional(Sounds.explosion, 1, anoopPan, 0, 0, beginMission);
+			soundEngine.playSoundVoice(Sounds.voiceOptimalDepthReached, beginMission);
+			//soundEngine.playSoundPositional(Sounds.explosion, 1, anoopPan, 0, 0, beginMission);
 		}
 		
 		public function beginMission():void{
