@@ -74,7 +74,7 @@
 			trace("Sound loaded: " + finalURL);
 			if(finalURL  == bgmusicFileName){
 				//playSound(Sounds.waves);
-				//playSoundPositional(Sounds.waves, .3, 0, 500);//skipping a half second of delay at the start
+				playSoundPositional(Sounds.waves, .3, 0, 500);//skipping a half second of delay at the start
 			}
 			//CAN'T UNLOAD ACTION LISTENER, POSSIBLY INEFFICIENT BUT ONLY ONCE FOR EACH SOUND
 			totalSoundsLoaded++;
