@@ -6,6 +6,7 @@
 		public static const underwater:int = 2;
 		public static const engine:int = 3;
 		public static const klaxon:int = 4;
+		public static const explosion:int = 5;
 		public function Sounds() {
 			// constructor code
 		}

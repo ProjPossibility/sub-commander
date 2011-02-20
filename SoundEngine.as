@@ -44,6 +44,7 @@
 			loadSound("Audio/Sound/Underwater/Underwater04.mp3");//Sounds.Underwater = 2
 			loadSound("Audio/Sound/Engine/dieselEngine01.mp3");//Sounds.engine = 3
 			loadSound("Audio/Sound/Alarm/Klaxon01.mp3");//Sounds.klaxon = 4
+			loadSound("Audio/Sound/Explosion/waterExplosion01.mp3");//Sounds.explosion = 5
 			doneRequestingSounds = true;
 		}
 		
