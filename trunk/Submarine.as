@@ -43,6 +43,9 @@
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, keyPressed );
 			stage.addEventListener( KeyboardEvent.KEY_UP, keyReleased );
 			//stage.addEventListener( MouseEvent.MOUSE_MOVE, mouseMoved );
+			
+			
+			//SoundEngine.getInstance().playSoundPositional(Sounds.ping,1,0,0,999999);
 		}
 		
 		public function update():void {
@@ -62,9 +65,17 @@
 			for(var i:int = main.targets.length - 1; i >= 0; i--) {
 				var target:Target = main.targets[i];
 				var tempAngle:Number = myRotation - target.angleFS;
-				trace(tempAngle);
-				//trace("distance: " + target.distanceFS);
-				//trace("angle: " + target.angleFS);
+				if(tempAngle < 0) {
+					tempAngle *= -1;
+				} else {
+					tempAngle = 360 - tempAngle;
+				}
+				target.hearingAngleFS = 360 - tempAngle;
+				// hearing angle is the angle for "hearing" 0 - 360
+				// 0   - 90  = mostly right ear
+				// 90  - 180 = all right ear
+				// 180 - 270 = all left ear
+				// 270 - 360 = mostly left ear
 			}
 		}
 		

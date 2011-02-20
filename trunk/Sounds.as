@@ -1,4 +1,4 @@
-﻿package  {
+﻿package {
 	
 	public class Sounds {
 		public static const waves:int = 0;
