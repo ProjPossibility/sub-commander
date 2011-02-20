@@ -9,6 +9,9 @@
 		public var targets:Vector.<Target>;
 		public var missions:Missions;
 		
+		public var oldRadar:Number;
+		public var newRadar:Number;
+		
 		public function Main() {
 			soundEngine = SoundEngine.getInstance();
 			soundEngine.loadAll(soundsLoaded);
@@ -30,6 +33,8 @@
 			missions = new Missions(this);
 			missions.init();
 			missions.advance();
+			oldRadar = 0;
+			newRadar = 0;
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
 		}
@@ -42,13 +47,24 @@
 			for(var i:int = targets.length-1; i>=0; i--) {
 				targets[i].update();
 			}
-			//soundEngine.playSoundPositional(Sounds.ping, 0.5, -.5);
+			radar();
 		}
 		
 		public function soundsLoaded():void{
 			trace("sounds loaded, allow game to start!");
 			//soundEngine.playSoundPositional(Sounds.ping, 0.5, -.5);
 		}
+		public function radar()
+		{
+			oldRadar = newRadar;
+			newRadar+=18;
+			for(var i:int = targets.length-1; i>=0; i--)
+			{
+				if(targets[i].angleFS > oldRadar && targets[i].angleFS <= newRadar)
+				{
+					soundEngine.playSoundPositional(Sounds.ping, 1, targets[i].getPan());
+				}
+			}
+		}
 	}
-	
 }
