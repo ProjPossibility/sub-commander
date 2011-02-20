@@ -32,7 +32,7 @@
 			
 			missions = new Missions(this);
 			missions.init();
-			missions.advance();
+			//missions.advance();
 			oldRadar = 0;
 			newRadar = 0;
 			
@@ -66,7 +66,8 @@
 			{
 				if(targets[i].angleFS > oldRadar && targets[i].angleFS <= newRadar)
 				{
-					soundEngine.playSoundPositional(Sounds.ping, 1, targets[i].getPan());
+					//trace("ping!");
+					soundEngine.playSoundPositionalUpdate(Sounds.ping, 1, targets[i].getPan);
 				}
 			}
 		}
