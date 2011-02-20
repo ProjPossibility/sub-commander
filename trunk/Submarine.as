@@ -5,6 +5,9 @@
 	import flash.display.Stage;
 	import flash.events.KeyboardEvent;
 	
+	import flash.utils.Timer;
+	import flash.events.TimerEvent;
+	
 	public class Submarine extends MovieClip {
 
 		public var main:Main;
@@ -23,6 +26,9 @@
 		public var downSpace:Boolean;
 		
 		public var oldX:Number;
+		
+		public var fireTimer:Timer;
+		private var canFire:Boolean = true;
 
 		public function Submarine(main:Main) {
 			this.main = main;
@@ -39,6 +45,9 @@
 			oldX = 0;
 			spinSpeed = 0;
 			maxSpinSpeed = 4;
+			
+			fireTimer = new Timer(400, 1);
+			fireTimer.addEventListener(TimerEvent.TIMER, fireTimerHandler, false, 0, true);
 			
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, keyPressed );
 			stage.addEventListener( KeyboardEvent.KEY_UP, keyReleased );
@@ -119,7 +128,7 @@
 			} else if(e.keyCode == 38) {
 				downUp = true;
 			} else if(e.keyCode == 32) {
-				downSpace = true;
+				fire();
 			}
 		}
 		
@@ -145,7 +154,33 @@
 			oldX = stage.mouseX;
 			*/
 		}
-
+		
+		public function fire()
+		{
+			if (canFire)
+			{
+				for(var i:int = main.targets.length-1; i>=0; i--)
+				{
+					trace(main.targets[i].getPan());
+					if(main.targets[i].getPan() > -0.15 && main.targets[i].getPan() < 0.15)
+					{
+						if (main.contains(main.targets[i]))
+						{
+							main.removeChild(main.targets[i]);
+						}
+						main.targets.splice(i,1);
+						//soundEngine.playSoundPositional(Sounds.ping, 1, targets[i].getPan());
+					}
+				}
+				canFire = false;
+				fireTimer.start();
+			}
+		}
+		
+		public function fireTimerHandler(e:TimerEvent) : void
+		{
+			canFire = true;
+		}
 	}
 	
 }
