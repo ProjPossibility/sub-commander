@@ -7,6 +7,7 @@
 		public var soundEngine:SoundEngine;
 		public var submarine:Submarine;
 		public var targets:Vector.<Target>;
+		public var missions:Missions;
 		
 		public function Main() {
 			soundEngine = SoundEngine.getInstance();
@@ -25,6 +26,9 @@
 			submarine.init();
 			submarine.x = stage.stageWidth/2;
 			submarine.y = stage.stageHeight/2;
+			
+			missions = new Missions();
+			missions.advance();
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
 		}
