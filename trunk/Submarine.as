@@ -164,6 +164,7 @@
 					trace(main.targets[i].getPan());
 					if(main.targets[i].getPan() > -0.15 && main.targets[i].getPan() < 0.15)
 					{
+						soundEngine.playSoundPositional(Sounds.explosion);
 						if (main.contains(main.targets[i]))
 						{
 							main.removeChild(main.targets[i]);
