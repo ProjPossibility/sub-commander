@@ -41,6 +41,7 @@
 		public function Submarine(main:Main)
 		{
 			this.main = main;
+			mySound = Sounds.pingSub;
 		}
 
 		public function init():void
@@ -77,6 +78,7 @@
 			tick++;
 			if(tick%120 == 0)
 			{
+				checkedRange = false;
 				range();
 			}
 		}
@@ -249,12 +251,13 @@
 					if(!checkedRange)
 					{
 						checkedRange = true;
-						if(main.targets[i].hearingAngleFS < 15 || main.targets[i].hearingAngleFS > 345)
-							main.soundEngine.playSoundPositional(Sounds.voiceTargetDirectlyAhead, 1, SoundEngine.patrickPan);
-						else if (main.targets[i].distanceFS < 10000)
+						if (main.targets[i].distanceFS < 8000)
 						{
+							main.soundEngine.playSound(Sounds.klaxon);
 							main.soundEngine.playSoundPositional(Sounds.voice100MtoTarget, 1, SoundEngine.patrickPan);
 						}
+						else if(main.targets[i].hearingAngleFS < 15 || main.targets[i].hearingAngleFS > 345)
+							main.soundEngine.playSoundPositional(Sounds.voiceTargetDirectlyAhead, 1, SoundEngine.patrickPan);
 						else
 							main.soundEngine.playSoundPositional(Sounds.voiceTargetInRange, 1, SoundEngine.alexPan);
 					}
