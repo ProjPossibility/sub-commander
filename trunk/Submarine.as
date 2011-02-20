@@ -21,7 +21,7 @@
 		public var speed:Number;
 		public var maxSpeed:Number;
 		public var acceleration:Number;
-		public var engineVol:Number =0.05;
+		public var engineVol:Number =0.1;
 
 		public var downRight:Boolean;
 		public var downLeft:Boolean;
@@ -33,7 +33,8 @@
 		public var fireTimer:Timer;
 		public var explodeTimer:Timer;
 		private var canFire:Boolean = true;
-
+	
+		private var count:int = 0;
 
 		public function Submarine(main:Main)
 		{
@@ -60,6 +61,8 @@
 
 			stage.addEventListener( KeyboardEvent.KEY_DOWN, keyPressed );
 			stage.addEventListener( KeyboardEvent.KEY_UP, keyReleased );
+			SoundEngine.getInstance().playSoundPositionalUpdate(Sounds.engine, getEngineVol, getZero, 0, int.MAX_VALUE);
+
 			//stage.addEventListener( MouseEvent.MOUSE_MOVE, mouseMoved );
 
 
@@ -71,7 +74,17 @@
 			doRotation();
 			doAcceleration();
 			checkTargets();
-			main.soundEngine.playSoundPositional(Sounds.engine, engineVol, 0);
+			count++;
+		}
+		
+		public function getEngineVol(): Number
+		{
+			return engineVol;
+		}
+		
+		public function getZero() : Number //because I can
+		{
+			return 0;
 		}
 
 		public function checkTargets():void
@@ -140,7 +153,11 @@
 				{
 					speed = maxSpeed;
 				}
-				engineVol = speed/maxSpeed-0.8;
+				engineVol+=0.05;
+				if(engineVol > 2)
+				{
+					engineVol = 2;
+				}
 			}
 			else
 			{
@@ -149,7 +166,11 @@
 				{
 					speed = 0;
 				}
-				engineVol = 0.05;
+				engineVol-=0.05;
+				if(engineVol < 0.1)
+				{
+					engineVol = 0.1;
+				}
 			}
 			vX = Math.cos(rotation * Math.PI / 180) * speed;
 			vY = Math.sin(rotation * Math.PI / 180) * speed;
@@ -213,7 +234,7 @@
 		{
 			if (canFire)
 			{
-				main.soundEngine.playSoundPositional(Sounds.torpedoLaunch);
+				main.soundEngine.playSoundPositional(Sounds.torpedoLaunch, 0.1, 0);
 				explodeTimer.start();
 				canFire = false;
 				fireTimer.start();
@@ -231,7 +252,7 @@
 				//trace(main.targets[i].getPan());
 				if (main.targets[i].getPan() > -0.15 && main.targets[i].getPan() < 0.15)
 				{
-					main.soundEngine.playSoundPositional(Sounds.explosion);
+					main.soundEngine.playSoundPositional(Sounds.explosion, main.targets[i].getVolume(), main.targets[i].getPan());
 					if (main.contains(main.targets[i]))
 					{
 						main.removeChild(main.targets[i]);
