@@ -71,7 +71,6 @@
 			var sndURL:String =(evt.target as Sound).url;
 			//trace("sound.url: " + sndURL);
 			var finalURL:String = sndURL.substr(sndURL.lastIndexOf("/") + 1, sndURL.length);//bgmusicFileName.length);
-			trace("Sound loaded: " + finalURL);
 			if(finalURL  == bgmusicFileName){
 				//playSound(Sounds.waves);
 				playSoundPositional(Sounds.waves, .3, 0, 500);//skipping a half second of delay at the start
@@ -115,7 +114,6 @@
 			var trans:SoundTransform;
 			trans = new SoundTransform(volume, panning); 
 			var channel:SoundChannel = newSound.sound.play(startTime, loops);
-			trace(channel);
 			channel.soundTransform = trans;
 			//newSound.soundTransform = trans;
 			newSound.setChannel(channel);
