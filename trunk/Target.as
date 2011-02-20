@@ -26,9 +26,9 @@
 		}
 		
 		public function getVolume():Number{
-			if (distanceFS <= 250000)
+			if (distanceFS <= 360000)
 			{
-				hearingVolume = (250000-distanceFS)/2500000;
+				hearingVolume = (360000-distanceFS)/3600000;
 				if(hearingAngleFS >= 0 && hearingAngleFS < 90)
 					hearingVolume+=(90-hearingAngleFS)/1800;
 				else if(hearingAngleFS >= 90 && hearingAngleFS < 180)
