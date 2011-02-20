@@ -47,6 +47,7 @@
 			loadSound("Audio/Sound/Engine/dieselEngine01.mp3");//Sounds.engine = 3
 			loadSound("Audio/Sound/Alarm/Klaxon01.mp3");//Sounds.klaxon = 4
 			loadSound("Audio/Sound/Explosion/waterExplosion01.mp3");//Sounds.explosion = 5
+			loadSound("Audio/Sound/Torpedo/torpedo01.mp3");//Sounds.torpedoLaunch
 			doneRequestingSounds = true;
 		}
 		
