@@ -11,9 +11,11 @@
 		private static var instance:SoundEngine;
 		private static var allowInstantiation:Boolean = false;
 		private var sounds:Array;
+		private var bgmusicFileName:String;
 		public var totalSoundsLoaded:int = 0;
 		public var doneRequestingSounds:Boolean = false;
 		public var doneLoadingSounds:Boolean = false;
+		public var loadDoneCallback:Function;
 		public static function getInstance():SoundEngine {
 			if (instance == null) {
 				allowInstantiation = true;
@@ -27,17 +29,24 @@
 				throw new Error("Error: Instantiation failed: Use SingletonDemo.getInstance() instead of new.");
 			}
 			sounds = new Array();
+			//loadSounds();
+		}
+		
+		public function loadAll(callback:Function){
+			loadDoneCallback = callback;
 			loadSounds();
 		}
 		
 		private function loadSounds(){
-			loadSound("Audio/Sound/Sonar/Sonar01.mp3");//Sounds.Ping = 0
-			loadSound("Audio/Sound/Underwater/Underwater04.mp3");//Sounds.Underwater = 1
+			loadSound("Audio/Sound/Waves/waves01.mp3");//Sounds.Waves = 0
+			bgmusicFileName = "waves01.mp3";
+			loadSound("Audio/Sound/Sonar/Sonar01.mp3");//Sounds.Ping = 1
+			loadSound("Audio/Sound/Underwater/Underwater04.mp3");//Sounds.Underwater = 2
 			doneRequestingSounds = true;
 		}
 		
 		private function loadSound(fileLoc:String){
-			var snd:Sound = new Sound();  
+			var snd:Sound = new Sound();
 			var req:URLRequest = new URLRequest(fileLoc); 
 			snd.addEventListener(Event.COMPLETE, doLoadComplete);
 			snd.load(req);
@@ -50,6 +59,14 @@
 		 
 		function doLoadComplete(evt:Event):void
 		{
+			
+			var sndURL:String =(evt.target as Sound).url;
+			//trace("sound.url: " + sndURL);
+			var finalURL:String = sndURL.substr(sndURL.lastIndexOf("/") + 1, bgmusicFileName.length);
+			//trace("final url: " + finalURL);
+			if(finalURL  == bgmusicFileName){
+				playSound(Sounds.waves);
+			}
 			//CAN'T UNLOAD ACTION LISTENER, POSSIBLY INEFFICIENT BUT ONLY ONCE FOR EACH SOUND
 			totalSoundsLoaded++;
 			if(doneRequestingSounds){
@@ -57,8 +74,9 @@
 					//we've requested all the sounds and loaded all of them
 					doneLoadingSounds = true;
 					trace("done loading sounds");
-					playSound(Sounds.ambient);
-					playSound(Sounds.ping);
+					loadDoneCallback();
+					//playSound(Sounds.ambient);
+					//playSound(Sounds.ping);
 				}
 			}
 			//trace("Song loaded.");
