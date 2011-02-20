@@ -11,7 +11,11 @@
 		public var currentMission:int;
 		public var currentIndex:int;
 		
-		public function Missions() {
+		public var main:Main;
+		
+		public function Missions(main:Main) {
+			this.main = main;
+			
 			missions = new Array();
 			missions =
 			[
@@ -32,8 +36,8 @@
 				case position:
 					// spawn a new position target
 					var position:Position = new Position(main);
-					main.targets.push( positition );
-					addChild( position );
+					main.targets.push( position );
+					main.addChild( position );
 					break;
 			}
 			
