@@ -34,7 +34,8 @@
 		public var explodeTimer:Timer;
 		private var canFire:Boolean = true;
 	
-		private var count:int = 0;
+		private var tick:int = 0;
+		//public var timeSinceMoved
 
 		public function Submarine(main:Main)
 		{
@@ -74,7 +75,7 @@
 			doRotation();
 			doAcceleration();
 			checkTargets();
-			count++;
+			tick++;
 		}
 		
 		public function getEngineVol(): Number
