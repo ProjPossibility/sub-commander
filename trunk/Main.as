@@ -21,7 +21,10 @@
 		
 		public var overlay:Overlay;
 		
+		public var gameLayer:MovieClip = new MovieClip();
+		
 		public function Main() {
+			addChild(gameLayer);
 			soundEngine = SoundEngine.getInstance();
 			soundEngine.loadAll(soundsLoaded);
 			StageClass.setStage(stage);
@@ -33,7 +36,7 @@
 		public function init():void
 		{
 			submarine = new Submarine(this);
-			this.addChild(submarine);
+			gameLayer.addChild(submarine);
 			targets = new Vector.<Target>();
 			/*
 			enemy = new Enemy(this, 50, 100);
@@ -98,6 +101,7 @@
 		}
 		public function beginGame():void {
 			this.gameStart = true;
+			//missions.advance();
 			missions.startGame();
 		}
 		public function soundsLoaded():void{
