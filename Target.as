@@ -28,7 +28,7 @@
 		public function getVolume():Number{
 			if (distanceFS <= 250000)
 			{
-				hearingVolume = (250000-distanceFS)/250000;
+				hearingVolume = (250000-distanceFS)/2500000;
 				return hearingVolume;
 			}
 			else

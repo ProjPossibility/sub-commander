@@ -153,10 +153,10 @@
 				{
 					speed = maxSpeed;
 				}
-				engineVol+=0.05;
-				if(engineVol > 2)
+				engineVol+=0.01;
+				if(engineVol > 0.15)
 				{
-					engineVol = 2;
+					engineVol = 0.15;
 				}
 			}
 			else
@@ -166,10 +166,10 @@
 				{
 					speed = 0;
 				}
-				engineVol-=0.05;
-				if(engineVol < 0.1)
+				engineVol-=0.01;
+				if(engineVol < 0.05)
 				{
-					engineVol = 0.1;
+					engineVol = 0.05;
 				}
 			}
 			vX = Math.cos(rotation * Math.PI / 180) * speed;
