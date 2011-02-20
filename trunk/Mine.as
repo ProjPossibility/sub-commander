@@ -7,6 +7,7 @@
 		public function Mine(main:Main) {
 			this.main = main;
 			mySound = Sounds.pingMine;
+			objectName = "Mine";
 		}
 	}
 	

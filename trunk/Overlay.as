@@ -26,7 +26,10 @@
 		
 		public var readyToSurface:Boolean = false;
 		
-		public function Overlay() {
+		public var main:Main;
+		
+		public function Overlay(main:Main) {
+			this.main = main;
 			backGround = new Sprite();
 			
 			backGround.graphics.beginFill(0x3E4DFF);
@@ -95,7 +98,7 @@
 			
 			if(myState == BUBBLES && waves1.deepBlue.currentFrameLabel == "endSubmerge" ) {
 				myState = GAME;
-				trace("start game");
+				main.beginGame();
 				surface();			
 			}
 			if(myState == SURFACE && waves1.deepBlue.currentFrameLabel == "endSurface" ) {

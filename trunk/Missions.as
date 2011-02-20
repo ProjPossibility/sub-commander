@@ -40,13 +40,17 @@
 		public function init():void {
 			currentIndex = 0;
 			//4 minute timer
-			gameTimer = new Timer(3000, 0);
+			gameTimer = new Timer(240000, 0);
 			gameTimer.addEventListener(TimerEvent.TIMER, gameOver);
 		}
 		
 		public function startGame():void {
 			currentIndex = 1;
 			gameTimer.start();
+		}
+		
+		public function playTutorial():void {
+			
 		}
 		
 		public function advance():void {
@@ -57,6 +61,7 @@
 				//0 is case for tutorial
 				case 0:
 					tutorial();
+					advance();
 					break;
 				//1 is case for descent
 				/*
@@ -92,6 +97,14 @@
 			currentIndex++;
 		}
 		
+		public function update():void {
+			if (currentIndex >= position) {
+				if (main.targets.length == 0) {
+					advance();
+				}
+			}
+		}
+		
 		public function tutorial():void {
 			
 		}
@@ -115,11 +128,13 @@
 		}
 		
 		public function win():void {
+			main.overlay.surface();
 			main.remove();
 			main.init();
 		}
 		
 		public function gameOver(e:TimerEvent):void {
+			main.overlay.surface();
 			main.remove();
 			main.init();
 			trace("Game over, player ran out of time");
