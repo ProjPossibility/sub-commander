@@ -19,9 +19,9 @@
 			missions = new Array();
 			missions =
 			[
-			 "position",
-			 "mine_with_instruction",
-			 "mine"
+			 position,
+			 mine_with_instruction,
+			 mine
 			];
 		}
 		
@@ -31,14 +31,19 @@
 		
 		public function advance():void {
 			currentMission = missions[currentIndex];
-			
+			trace("kjhkjh"+position);
+			trace("fghj"+currentMission);
 			switch(currentMission) {
 				case position:
+					trace("plaing");
+					trace("second");
 					// spawn a new position target
 					var position:Position = new Position(main);
 					main.targets.push( position );
 					main.addChild( position );
 					break;
+				default:
+					trace("default");
 			}
 			
 			currentIndex++;
