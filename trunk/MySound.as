@@ -4,7 +4,10 @@
 	import flash.media.SoundTransform; 
 	import flash.utils.ByteArray;
 	import flash.events.Event;
+	import flash.events.TimerEvent;
 	import flash.events.EventDispatcher;
+	import flash.utils.Timer;
+
 	public class MySound extends Sound{
 
 		public var sound:Sound;
@@ -13,6 +16,8 @@
 		private var panFunc:Function;
 		private var volFunc:Function;
 		private var callback:Function;
+		private var delay:int = 0;
+		private var t:Timer;
 		
 		public function MySound(s:Sound) {
 			// constructor code
@@ -22,6 +27,11 @@
 		
 		public function stop(){
 			channel.stop();
+			returnToCallback(null);
+		}
+		
+		public function setDelay(d:int){
+			delay = d;
 		}
 		
 		public function setCallback(cb:Function){
@@ -33,7 +43,17 @@
 		}
 		
 		public function returnToCallback(evt:Event){
+			if(callback == null){
+				return;
+			}
 			channel.removeEventListener(Event.SOUND_COMPLETE, returnToCallback);
+			t = new Timer(delay);
+			t.start();
+			t.addEventListener(TimerEvent.TIMER, callbackDelayComplete);
+		}
+		
+		public function callbackDelayComplete(evt:Event){
+			t.removeEventListener(TimerEvent.TIMER, callbackDelayComplete);
 			callback();
 		}
 		

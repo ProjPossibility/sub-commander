@@ -74,12 +74,12 @@
 		public function beginDescent():void{
 			soundEngine.stopWaveSound();//dive, diveDepths, diveDepthReached
 			//soundEngine.playSoundVoice(Sounds.voiceCommenceDescent, diveSoundEnd);
-			soundEngine.playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd);
+			soundEngine.playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
 		}
 		
 		public function diveSoundEnd():void{
 			//soundEngine.playSoundVoice(Sounds.voiceDepthMeters, diveDepthReached);
-			soundEngine.playSoundPositional(Sounds.voiceDepthMeters, 1, SoundEngine.anoopPan, 0, 0, diveDepthReached);
+			soundEngine.playSoundPositional(Sounds.voiceDepthMeters, 1, SoundEngine.anoopPan, 0, 0, diveDepthReached, 1000);
 		}
 		
 		public function diveDepthReached():void{

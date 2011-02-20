@@ -141,10 +141,12 @@
 		}*/
 		
 		//soundEnum is like Sounds.___, plays it globally and flat
-		public function playSound(soundEnum:int, callback:Function = null):MySound{
+		//delay in millis
+		public function playSound(soundEnum:int, callback:Function = null, delay:int = 0):MySound{
 			var newSound:MySound = sounds[soundEnum].clone();
 			newSound.setChannel(new SoundChannel());
 			newSound.setCallback(callback);
+			newSound.setDelay(delay);
 			newSound.sound.play();
 			return newSound;
 		}
@@ -154,8 +156,9 @@
 		//panning must be a Number between -1 (left) and 1 (right) for the pan value
 		//startTime is the number of millis it skips at the start of the sound (if you want to start in the middle of the sound)
 		//loops is the number of times it loops the sound (0 to play once)
+		//delay in millis
 		public function playSoundPositional(soundEnum:int, volume:Number = 1, panning:Number = 0,
-											startTime:Number = 0, loops:int = 0, callback:Function = null):MySound{
+											startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
 			//soundEnum is like Sounds.___, plays it globally and flat
 			//always making a soundTransform when playing a sound may be inefficient
 			//trace("original mySound: " + sounds[soundEnum]);
@@ -170,6 +173,7 @@
 			//newSound.soundTransform = trans;
 			newSound.setChannel(channel);
 			newSound.setCallback(callback);
+			newSound.setDelay(delay);
 			return newSound;
 		}
 		//soundEnum is like Sounds.___
@@ -177,8 +181,9 @@
 		//panFunc must return a Number between -1 (left) and 1 (right) for the pan value
 		//startTime is the number of millis it skips at the start of the sound (if you want to start in the middle of the sound)
 		//loops is the number of times it loops the sound (0 to play once)
+		//delay in millis
 		public function playSoundPositionalUpdate(soundEnum:int, volFunc:Function, panFunc:Function, 
-												  startTime:Number = 0, loops:int = 0, callback:Function = null):MySound{
+												  startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
 			var newSound:MySound = sounds[soundEnum].clone();
 			var trans:SoundTransform;
 			trans = new SoundTransform(volFunc(), panFunc()); 
@@ -190,9 +195,14 @@
 			//newSound.soundTransform = trans;
 			newSound.setChannel(channel);
 			newSound.setCallback(callback);
+			newSound.setDelay(delay);
 			newSound.registerPanUpdate(panFunc);
 			newSound.registerVolUpdate(volFunc);
 			return newSound;
+		}
+		
+		public function playSoundOClockPosition(angle:Number):MySound{
+			return playSoundPositional(Sounds.voice1oClockPosition, 1, patrickPan, 0, 0, null);
 		}
 		
 		/*public function playSoundVoice(soundEnum:int, callback:Function = null):MySound{
