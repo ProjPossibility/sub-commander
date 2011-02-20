@@ -130,10 +130,12 @@
 			if (downRight && ! downLeft)
 			{
 				spinSpeed = maxSpinSpeed;
+				//main.soundEngine.playSoundPositional(Sounds.voiceRightFullRudder, 1, SoundEngine.anoopPan);
 			}
 			else if (downLeft && !downRight)
 			{
 				spinSpeed =  -  maxSpinSpeed;
+				//main.soundEngine.playSoundPositional(Sounds.voiceLeftFullRudder, 1, SoundEngine.anoopPan);
 			}
 			else
 			{
@@ -248,7 +250,11 @@
 					{
 						checkedRange = true;
 						if(main.targets[i].hearingAngleFS < 15 || main.targets[i].hearingAngleFS > 345)
-							main.soundEngine.playSoundPositional(Sounds.voiceTargetDirectlyAhead, 1, SoundEngine.alexPan);
+							main.soundEngine.playSoundPositional(Sounds.voiceTargetDirectlyAhead, 1, SoundEngine.patrickPan);
+						else if (main.targets[i].distanceFS < 10000)
+						{
+							main.soundEngine.playSoundPositional(Sounds.voice100MtoTarget, 1, SoundEngine.patrickPan);
+						}
 						else
 							main.soundEngine.playSoundPositional(Sounds.voiceTargetInRange, 1, SoundEngine.alexPan);
 					}
