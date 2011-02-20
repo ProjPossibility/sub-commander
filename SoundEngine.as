@@ -50,6 +50,41 @@
 			loadSound("Audio/Sound/Alarm/Klaxon01.mp3");//Sounds.klaxon = 6
 			loadSound("Audio/Sound/Explosion/waterExplosion01.mp3");//Sounds.explosion = 7
 			loadSound("Audio/Sound/Torpedo/torpedo03.mp3");//Sounds.torpedoLaunch = 8
+			//Voice files
+			loadSound("Audio/Voice/ClockPositions/1oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/2oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/3oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/4oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/5oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/6oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/7oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/8oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/9oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/10oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/11oClockPosition.mp3");//Sounds.voice1oClockPosition
+			loadSound("Audio/Voice/ClockPositions/12oClockPosition.mp3");//Sounds.voice1oClockPosition
+			
+			loadSound("Audio/Voice/100MtoTarget.mp3");//Sounds.voice
+			loadSound("Audio/Voice/anotherMine.mp3");//Sounds.voice
+			loadSound("Audio/Voice/commenceDescent.mp3");//Sounds.voice
+			loadSound("Audio/Voice/commenceDestructionOfMineField.mp3");//Sounds.voice
+			loadSound("Audio/Voice/depthMeters.mp3");//Sounds.voice
+			loadSound("Audio/Voice/enemySubSighted.mp3");//Sounds.voice
+			loadSound("Audio/Voice/initialBriefing.mp3");//Sounds.voice
+			loadSound("Audio/Voice/leftFullRudder.mp3");//Sounds.voice
+			loadSound("Audio/Voice/maxSpeedReached.mp3");//Sounds.voice
+			loadSound("Audio/Voice/minefieldWithinRange.mp3");//Sounds.voice
+			loadSound("Audio/Voice/moreMines.mp3");//Sounds.voice
+			loadSound("Audio/Voice/noRange.mp3");//Sounds.voice
+			loadSound("Audio/Voice/optimalDepthReached.mp3");//Sounds.voice
+			loadSound("Audio/Voice/rightFullRudder.mp3");//Sounds.voice
+			loadSound("Audio/Voice/targetDirectlyAhead.mp3");//Sounds.voice
+			loadSound("Audio/Voice/targetHit.mp3");//Sounds.voice
+			loadSound("Audio/Voice/targetInRange.mp3");//Sounds.voice
+			loadSound("Audio/Voice/targetMissed.mp3");//Sounds.voice
+			loadSound("Audio/Voice/tubesReadytoFire.mp3");//Sounds.voice
+			loadSound("Audio/Voice/weaponsArmed.mp3");//Sounds.voice
+			loadSound("Audio/Voice/weaponsFired.mp3");//Sounds.voice
 			doneRequestingSounds = true;
 		}
 		
