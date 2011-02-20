@@ -18,6 +18,11 @@
 		public var newRadar:Number;
 		
 		public function Main() {
+			init();
+		}
+		
+		public function init():void
+		{
 			soundEngine = SoundEngine.getInstance();
 			soundEngine.loadAll(soundsLoaded);
 			StageClass.setStage(stage);
