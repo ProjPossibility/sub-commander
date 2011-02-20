@@ -10,6 +10,7 @@
 		
 		public function Main() {
 			soundEngine = SoundEngine.getInstance();
+			soundEngine.loadAll(soundsLoaded);
 			submarine = new Submarine(this);
 			mine = new Mine(this);
 			
@@ -25,6 +26,10 @@
 			//trace("sup");
 			soundEngine.update();
 			//soundEngine.playSound(Sounds.ping);
+		}
+		
+		public function soundsLoaded():void{
+			trace("sounds loaded, allow game to start!");
 		}
 	}
 	
