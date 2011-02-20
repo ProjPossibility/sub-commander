@@ -40,9 +40,11 @@
 			if(hearingAngleFS >= 0 && hearingAngleFS < 90)
 				return hearingAngleFS/90;
 			else if(hearingAngleFS >= 90 && hearingAngleFS < 180)
-				return 1;
+				//return 1;
+				return (180-hearingAngleFS)/90;
 			else if(hearingAngleFS >= 180 && hearingAngleFS < 270)
-				return -1;
+				//return -1;
+				return (180-hearingAngleFS)/90;
 			else if(hearingAngleFS >= 270)
 				return (hearingAngleFS - 360)/90;
 			return 0;
