@@ -226,11 +226,9 @@
 		//only plays if this voice is not already playing
 		public function playVoicePassiveUpdate(soundEnum:int, volFunc:Function, panFunc:Function, 
 												  startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
-			for(var i:int = 0; i < voiceSounds.length; i++){
-				if(voiceSounds.length > 0){
-					//if there is another voice sound, don't add me
-					return null;
-				}
+			if(voiceSounds.length > 0){
+				//if there is another voice sound, don't add me
+				return null;
 			}
 			return playSoundPositionalUpdate(soundEnum, volFunc, panFunc, startTime, loops, callback, delay);
 		}
@@ -238,25 +236,35 @@
 		//cancels all other voice sounds
 		public function playVoiceAggressive(soundEnum:int, volume:Number = 1, panning:Number = 0,
 											startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
-			for(var i:int = 0; i < voiceSounds.length; i++){
-				if(voiceSounds.length > 0){
-					//if there is another voice sound, don't add me
-					return null;
-				}
+			var mySound:MySound = playSoundPositional(soundEnum, volume, panning, startTime, loops, callback, delay);
+			while(voiceSounds.length > 2){
+				//remove all sounds but me
+				trace("terminate sound: " + voiceSounds[1].getSoundEnum());
+				voiceSounds[1].terminate();
+				voiceSounds.splice(1,1);
 			}
-			return playSoundPositional(soundEnum, volume, panning, startTime, loops, callback, delay);
+			trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
+			voiceSounds[0].stop();
+			trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
+			//voiceSounds[0].resume();
+			return mySound;
 		}
 		
 		//cancels all other voice sounds
 		public function playVoiceAgressiveUpdate(soundEnum:int, volFunc:Function, panFunc:Function, 
 												  startTime:Number = 0, loops:int = 0, callback:Function = null, delay:int = 0):MySound{
-			for(var i:int = 0; i < voiceSounds.length; i++){
-				if(voiceSounds.length > 0){
-					//if there is another voice sound, don't add me
-					return null;
-				}
+			var mySound:MySound = playSoundPositionalUpdate(soundEnum, volFunc, panFunc, startTime, loops, callback, delay);
+			while(voiceSounds.length > 2){
+				//remove all sounds but me
+				trace("terminate sound: " + voiceSounds[1].getSoundEnum());
+				voiceSounds[1].terminate();
+				voiceSounds.splice(1,1);
 			}
-			return playSoundPositionalUpdate(soundEnum, volFunc, panFunc, startTime, loops, callback, delay);
+			trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
+			voiceSounds[0].stop();
+			trace("" + voiceSounds.length + " sounds left, first sound: " + voiceSounds[0].getSoundEnum());
+			//voiceSounds[0].resume();
+			return mySound;
 		}
 		
 		public function playSoundOClockPosition(angle:Number, pan:Number, callback:Function = null, delay:int = 0):MySound{
@@ -332,6 +340,7 @@
 			voiceSounds.shift();
 			if(voiceSounds.length > 0){
 				voiceSounds[0].resume();
+				trace("resume sound: " + snd.getSoundEnum());
 			}
 		}
 		
