@@ -31,8 +31,8 @@
 		
 		public function advance():void {
 			currentMission = missions[currentIndex];
-			trace("Position: " + position);
-			trace("Current Mission: " + currentMission);
+			//trace("Position: " + position);
+			//trace("Current Mission: " + currentMission);
 			switch(currentMission) {
 				//0 is case for Position
 				case 0:
@@ -44,12 +44,12 @@
 				//1 is case for mine_instruction
 				case 1:
 					spawnMine();
+					main.soundEngine.playSoundPositional(Sounds.voiceMineFieldWithinRange, 1, SoundEngine.patrickPan, 0, 0, commenceMineFieldDestruction, 1000);
 					break;
 				//2 is case for mine
 				case 2:
-					var mine:Mine = new Mine(main);
-					main.targets.push( mine );
-					main.addChild( mine );
+					spawnMine();
+					main.soundEngine.playSoundPositional(Sounds.voiceAnotherMine, 1, SoundEngine.patrickPan, 0, 0, null, 0);
 					break;
 				default:
 					trace("default");
@@ -95,7 +95,29 @@
 			main.targets.push( mine );
 			main.addChild( mine );
 		}
-
+		
+		public function spawnEnemy():void {
+			var dist:Number = main.stage.stageHeight/2 ;
+			var enemy = new Enemy(main, 50, 100);
+			
+			var x:Number;
+			var y:Number;
+			var angle:Number;
+			angle = Math.random() * 2 * Math.PI;
+			//trace("angle: " + angle);
+			x = (Math.cos(angle) * dist) + main.submarine.x;
+			y = (Math.sin(angle) * dist) + main.submarine.y;
+			enemy.x = x;
+			enemy.y = y;
+			
+			main.targets.push( enemy );
+			main.addChild( enemy );
+		}
+		
+		public function commenceMineFieldDestruction():void {
+			main.soundEngine.playSoundPositional(Sounds.voiceCommenceDestructionOfMineField, 1, SoundEngine.patrickPan, 0, 0, null, 0);
+		}
+		
 	}
 	
 }

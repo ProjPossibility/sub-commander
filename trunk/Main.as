@@ -115,10 +115,5 @@
 			}
 		}
 		
-		public function checkCollisions():void {
-			for (var i:int = targets.length-1; i >= 0; i--) {
-				
-			}
-		}
 	}
 }
