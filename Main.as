@@ -115,22 +115,6 @@
 			soundEngine.playSoundOClockPosition((targets[0] as Target).hearingAngleFS, (targets[0] as Target).getPan(), oClockTest);
 		}
 		
-		public function beginDescent():void{
-			soundEngine.stopWaveSound();//dive, diveDepths, diveDepthReached
-			//soundEngine.playSoundVoice(Sounds.voiceCommenceDescent, diveSoundEnd);
-			soundEngine.playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
-		}
-		
-		public function diveSoundEnd():void{
-			//soundEngine.playSoundVoice(Sounds.voiceDepthMeters, diveDepthReached);
-			soundEngine.playSoundPositional(Sounds.voiceDepthMeters, 1, SoundEngine.anoopPan, 0, 0, diveDepthReached, 1000);
-		}
-		
-		public function diveDepthReached():void{
-			//soundEngine.playSoundVoice(Sounds.voiceOptimalDepthReached, beginMission);
-			soundEngine.playSoundPositional(Sounds.voiceOptimalDepthReached, 1, SoundEngine.anoopPan, 0, 0, beginMission);
-		}
-		
 		public function beginMission():void{
 			
 		}

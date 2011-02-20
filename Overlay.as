@@ -82,9 +82,27 @@
 		public function submerge():void {
 			myState = SUBMERGE;
 			timer = 150;
-			
+			beginDescentSounds();
 		}
 		
+		public function beginDescentSounds():void{
+			SoundEngine.getInstance().stopWaveSound();//dive, diveDepths, diveDepthReached
+			//soundEngine.playSoundVoice(Sounds.voiceCommenceDescent, diveSoundEnd);
+			SoundEngine.getInstance().playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
+		}
+		
+		public function diveSoundEnd():void{
+			//soundEngine.playSoundVoice(Sounds.voiceDepthMeters, diveDepthReached);
+			SoundEngine.getInstance().playSoundPositional(Sounds.voiceDepthMeters, 1, SoundEngine.anoopPan, 0, 0, diveDepthReached, 1000);
+		}
+		
+		public function diveDepthReached():void{
+			//soundEngine.playSoundVoice(Sounds.voiceOptimalDepthReached, beginMission);
+			SoundEngine.getInstance().playSoundPositional(Sounds.voiceOptimalDepthReached, 1, SoundEngine.anoopPan, 0, 0, beginMission);
+		}
+		public function beginMission():void{
+			
+		}
 		public function surface():void {
 			waves1.deepBlue.gotoAndPlay("surface");
 			waves2.deepBlue.gotoAndPlay("surface");
