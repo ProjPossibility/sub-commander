@@ -30,6 +30,7 @@
 		
 		public function soundsLoaded():void{
 			trace("sounds loaded, allow game to start!");
+			//soundEngine.playSound(Sounds.ping, 0, 5);
 		}
 	}
 	

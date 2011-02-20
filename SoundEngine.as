@@ -62,10 +62,10 @@
 			
 			var sndURL:String =(evt.target as Sound).url;
 			//trace("sound.url: " + sndURL);
-			var finalURL:String = sndURL.substr(sndURL.lastIndexOf("/") + 1, bgmusicFileName.length);
-			//trace("final url: " + finalURL);
+			var finalURL:String = sndURL.substr(sndURL.lastIndexOf("/") + 1, sndURL.length);//bgmusicFileName.length);
+			trace("Sound loaded: " + finalURL);
 			if(finalURL  == bgmusicFileName){
-				playSound(Sounds.waves);
+				playSound(Sounds.waves, 500);//skipping a half second of delay at the start
 			}
 			//CAN'T UNLOAD ACTION LISTENER, POSSIBLY INEFFICIENT BUT ONLY ONCE FOR EACH SOUND
 			totalSoundsLoaded++;
@@ -92,11 +92,11 @@
 			//trace("playback complete");
 		}
 		
-		public function playSound(soundEnum:int):void{
+		public function playSound(soundEnum:int, startTime:Number = 0, loops:int = 0):void{
 			//soundEnum is like Sounds.ping, this plays it globally and flat
 			//trace("awooga: " + soundEnum);
 			//trace(sounds[soundEnum]);
-			sounds[soundEnum].play();
+			sounds[soundEnum].play(startTime, loops);
 		}
 	}
 }
