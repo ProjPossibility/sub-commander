@@ -72,7 +72,7 @@
 			this.addChild(overlay);
 			overlay.init();
 			//uncomment to use debug
-			overlay.visible = false;
+			//overlay.visible = false;
 		}
 		
 		public function remove() :void
