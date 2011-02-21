@@ -125,14 +125,17 @@
 			spawnMine(200, 200);
 			trace("Spawn 1st mine");
 			main.soundEngine.playSoundPositional(Sounds.voiceMineFieldWithinRange, 1, SoundEngine.patrickPan, 0, 0, commenceMineFieldDestruction, 1000);
+			main.soundEngine.playSoundPositional(Sounds.voiceCommenceDestructionOfMineField, 1, SoundEngine.patrickPan, 0, 0);
 		}
 		
 		public function twoMines():void {
+			main.soundEngine.playSoundPositional(Sounds.voiceMoreMines, 1, SoundEngine.patrickPan, 0, 0);
 			spawnMine(200, 300);
 			spawnMine(300, 400);
 		}
 		
 		public function enemySub():void {
+			main.soundEngine.playSoundPositional(Sounds.voiceEnemySubSighted, 1, SoundEngine.patrickPan, 0, 0);
 			spawnEnemy(500, 600);
 		}
 		

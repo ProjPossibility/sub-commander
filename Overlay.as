@@ -88,7 +88,9 @@
 		public function beginDescentSounds():void{
 			SoundEngine.getInstance().stopWaveSound();//dive, diveDepths, diveDepthReached
 			//soundEngine.playSoundVoice(Sounds.voiceCommenceDescent, diveSoundEnd);
-			SoundEngine.getInstance().playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
+			//SoundEngine.getInstance().playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
+			//SoundEngine.getInstance().playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
+			SoundEngine.getInstance().playVoiceAggressive(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
 		}
 		
 		public function diveSoundEnd():void{
@@ -101,7 +103,7 @@
 			SoundEngine.getInstance().playSoundPositional(Sounds.voiceOptimalDepthReached, 1, SoundEngine.anoopPan, 0, 0, beginMission);
 		}
 		public function beginMission():void{
-			
+			SoundEngine.getInstance().playSoundPositional(Sounds.voiceInitialBriefing, 1, SoundEngine.patrickPan, 0, 0);
 		}
 		public function surface():void {
 			waves1.deepBlue.gotoAndPlay("surface");

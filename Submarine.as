@@ -284,10 +284,12 @@
 							main.soundEngine.playSound(Sounds.klaxon);
 							main.soundEngine.playSoundPositional(Sounds.voice100MtoTarget, 1, SoundEngine.patrickPan);
 						}
-						else if(main.targets[i].hearingAngleFS < 15 || main.targets[i].hearingAngleFS > 345)
+						else if(main.targets[i].hearingAngleFS < 15 || main.targets[i].hearingAngleFS > 345){
 							main.soundEngine.playSoundPositional(Sounds.voiceTargetDirectlyAhead, 1, SoundEngine.patrickPan);
-						else
-							main.soundEngine.playSoundPositional(Sounds.voiceTargetInRange, 1, SoundEngine.alexPan);
+						} else {
+							//main.soundEngine.playSoundPositional(Sounds.voiceTargetInRange, 1, SoundEngine.alexPan);
+							checkedRange = false;
+						}
 					}
 					return true;
 				}
@@ -332,6 +334,7 @@
 				if (this.hitTestObject(main.targets[i]) && main.targets[i].getObjectName() == "Position") {
 					main.gameLayer.removeChild(main.targets[i]);
 					main.targets.splice(i, 1); 
+					//main.soundEngine.playSoundPositional(Sounds.voiceMineFieldWithinRange, 1, SoundEngine.patrickPan, 0, 0);
 					//main.missions.advance();
 					trace("Collied with position");
 				}
