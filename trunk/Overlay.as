@@ -161,9 +161,9 @@
 				bubbleTimer--;
 			}
 			if( myState == Overlay.GAME ) {
-				bubbleRate = 6;
-			} else {
 				bubbleRate = 4;
+			} else {
+				bubbleRate = 3;
 			}
 			if(bubbleTimer < 0) {
 				bubbleTimer = this.bubbleRate;
@@ -176,7 +176,7 @@
 				} else {
 					bubble.x = Math.random()*550;
 				}
-				bubble.y = 400+Math.random()*30;
+				bubble.y = 350+Math.random()*30;
 				bubble.scaleX = bubble.scaleY = Math.random()*.5 + .5;
 				bubbleLayer.addChild(bubble);
 			}
@@ -188,6 +188,13 @@
 					bubs.y -= 8;
 				}
 				bubs.x -= main.submarine.spinSpeed * 2;
+				//
+				if(bubs.x > 550/2) {
+					//push right
+					bubs.x += main.submarine.speed;
+				} else {
+					bubs.x -= main.submarine.speed;
+				}
 				if(bubs.y < 0) {
 					bubblePool.push(bubs);
 					bubbleLayer.removeChild(bubs);
