@@ -45,7 +45,7 @@
 			currentIndex = 0;
 			gameIsOver = false;
 			//4 minute timer
-			gameTimer = new Timer(60000*.1, 0);
+			gameTimer = new Timer(60000*4, 0);
 			gameTimer.addEventListener(TimerEvent.TIMER, gameOver);
 		}
 		
@@ -160,6 +160,15 @@
 			gameIsOver = true;
 			main.gameStart = false;
 			gameTimer.stop();
+			main.submarine.resetValues();
+			//delete any remaining targets
+			for(var u:int = main.targets.length - 1; u >= 0; u--) {
+				main.gameLayer.removeChild(main.targets[u]);
+				main.targets.splice(u,1);
+			}
+			
+			main.missions.init();
+			
 			//main.remove();
 			//main.init();
 		}

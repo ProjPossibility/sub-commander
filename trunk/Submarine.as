@@ -47,8 +47,7 @@
 			this.main = main;
 		}
 
-		public function init():void
-		{
+		public function resetValues():void {
 			vX = 0;
 			vY = 0;
 
@@ -59,6 +58,12 @@
 			oldX = 0;
 			spinSpeed = 0;
 			maxSpinSpeed = 1.5;
+		}
+
+
+		public function init():void
+		{
+			resetValues();
 
 			fireTimer = new Timer(2000,1);
 			fireTimer.addEventListener(TimerEvent.TIMER, fireTimerHandler, false, 0, true);
