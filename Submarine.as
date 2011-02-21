@@ -238,6 +238,11 @@
 			{
 				fire();
 			}
+			else if (e.keyCode == 72)
+			{
+				SoundEngine.getInstance().playSoundOClockPosition((main.targets[0] as Target).hearingAngleFS, (main.targets[0] as Target).getPan());
+				//SoundEngine.getInstance().playSoundOClockPosition(main.targets[0].hearingAngleFS, main.);
+			}
 		}
 
 		public function keyReleased( e:KeyboardEvent ):void

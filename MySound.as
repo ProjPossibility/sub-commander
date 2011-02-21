@@ -78,7 +78,7 @@
 		}
 		
 		public function isVoiceSound(){
-			if((soundEnum >= Sounds.voice1oClockPosition && soundEnum <= Sounds.voiceWeaponsFired) || (soundEnum >= Sounds.voiceIntro && soundEnum <= Sounds.voicetutorialRight)){
+			if((soundEnum >= Sounds.voice1oClockPosition && soundEnum <= Sounds.voiceWeaponsFired) || (soundEnum >= Sounds.voiceIntro && soundEnum <= Sounds.voiceMissionSuccess)){
 				return true;
 			} else {
 				return false;

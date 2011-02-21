@@ -109,7 +109,9 @@
 			loadSound("Audio/Voice/Menu/tutorialFront.mp3");//Sounds.voicetutorialFront = 52;
 			loadSound("Audio/Voice/Menu/tutorialLeft.mp3");//Sounds.voicetutorialLeft = 53;
 			loadSound("Audio/Voice/Menu/tutorialRight.mp3");//Sounds.voicetutorialRight = 54;
-			doneRequestingSounds = true;
+			loadSound("Audio/Voice/missionfailed.mp3");//Sounds.voicetutorialRight = 55;
+			loadSound("Audio/Voice/missionsuccess.mp3");//Sounds.voicetutorialRight = 56;
+		doneRequestingSounds = true;
 		}
 		
 		private function loadSound(fileLoc:String){

@@ -64,6 +64,8 @@
 		public static const voicetutorialFront:int = 52;
 		public static const voicetutorialLeft:int = 53;
 		public static const voicetutorialRight:int = 54;
+		public static const voiceMissionFailed:int = 55;
+		public static const voiceMissionSuccess:int = 56;
 		public function Sounds() {
 			// constructor code
 		}
