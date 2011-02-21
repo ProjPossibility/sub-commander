@@ -138,7 +138,7 @@
 		
 		public function win():void {
 			trace("You win");
-			currentIndex = 1;
+			currentIndex = 0;
 			main.overlay.surface();
 			main.remove();
 			main.init();
@@ -235,7 +235,7 @@
 		}
 		
 		public function commenceMineFieldDestruction():void {
-			main.soundEngine.playSoundPositional(Sounds.voiceCommenceDestructionOfMineField, 1, SoundEngine.patrickPan, 0, 0, null, 0);
+			main.soundEngine.playSoundPositional(Sounds.voiceCommenceDestructionOfMineField, 1 , SoundEngine.patrickPan, 0, 0, null, 0);
 		}
 		
 	}
