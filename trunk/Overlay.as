@@ -90,17 +90,17 @@
 			//soundEngine.playSoundVoice(Sounds.voiceCommenceDescent, diveSoundEnd);
 			//SoundEngine.getInstance().playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
 			//SoundEngine.getInstance().playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
-			SoundEngine.getInstance().playVoiceAggressive(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
+			SoundEngine.getInstance().playVoiceAggressive(Sounds.voiceCommenceDescent, 4, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
 		}
 		
 		public function diveSoundEnd():void{
 			//soundEngine.playSoundVoice(Sounds.voiceDepthMeters, diveDepthReached);
-			SoundEngine.getInstance().playSoundPositional(Sounds.voiceDepthMeters, 1, SoundEngine.anoopPan, 0, 0, diveDepthReached, 1000);
+			SoundEngine.getInstance().playSoundPositional(Sounds.voiceDepthMeters, 4, SoundEngine.anoopPan, 0, 0, diveDepthReached, 1000);
 		}
 		
 		public function diveDepthReached():void{
 			//soundEngine.playSoundVoice(Sounds.voiceOptimalDepthReached, beginMission);
-			SoundEngine.getInstance().playSoundPositional(Sounds.voiceOptimalDepthReached, 1, SoundEngine.anoopPan, 0, 0, beginMission);
+			SoundEngine.getInstance().playSoundPositional(Sounds.voiceOptimalDepthReached, 3, SoundEngine.anoopPan, 0, 0, beginMission);
 		}
 		public function beginMission():void{
 			SoundEngine.getInstance().playSoundPositional(Sounds.voiceInitialBriefing, 1, SoundEngine.patrickPan, 0, 0);

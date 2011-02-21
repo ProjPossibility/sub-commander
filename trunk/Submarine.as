@@ -13,7 +13,7 @@
 	{
 		public var rightRudderDelay:int = 0;
 		public var leftRudderDelay:int = 0;
-		public static var framesBetweenRudderCommands:int = 60;
+		public static var framesBetweenRudderCommands:int = 180;
 
 		public var main:Main;
 		public var vX:Number;
@@ -36,7 +36,7 @@
 
 		public var fireTimer:Timer;
 		private var canFire:Boolean = true;
-		private var inRange:Boolean = true;;
+		private var inRange:Boolean = true;
 		private var checkedRange:Boolean = false; //make sure the voice for range is not called several times
 	
 		private var tick:int = 0;
@@ -53,12 +53,12 @@
 			vY = 0;
 
 			speed = 0;
-			maxSpeed = 2;
-			acceleration = 1;
+			maxSpeed = 1.3;
+			acceleration = .5;
 
 			oldX = 0;
 			spinSpeed = 0;
-			maxSpinSpeed = 3;
+			maxSpinSpeed = 1.5;
 
 			fireTimer = new Timer(2000,1);
 			fireTimer.addEventListener(TimerEvent.TIMER, fireTimerHandler, false, 0, true);
@@ -80,7 +80,7 @@
 			checkTargets();
 			checkCollisions();
 			tick++;
-			if(tick%120 == 0)
+			if(tick%240 == 0)
 			{
 				checkedRange = false;
 			}
@@ -148,7 +148,7 @@
 				if(!turning)
 				{
 					if(rightRudderDelay == 0){
-						main.soundEngine.playVoicePassive(Sounds.voiceRightFullRudder, 0, 1, SoundEngine.anoopPan);
+						//main.soundEngine.playVoicePassive(Sounds.voiceRightFullRudder, 0, 1, SoundEngine.anoopPan);
 						rightRudderDelay = framesBetweenRudderCommands;
 					}
 					turning = true;
@@ -160,7 +160,7 @@
 				if(!turning)
 				{
 					if(leftRudderDelay == 0){
-						main.soundEngine.playVoicePassive(Sounds.voiceLeftFullRudder, 0, 1, SoundEngine.anoopPan);
+						//main.soundEngine.playVoicePassive(Sounds.voiceLeftFullRudder, 0, 1, SoundEngine.anoopPan);
 						leftRudderDelay = framesBetweenRudderCommands;
 					}
 					turning = true;
