@@ -78,7 +78,7 @@
 		public function remove() :void
 		{
 			for(var i:int = targets.length-1; i>=0; i--) {
-				this.removeChild(targets[i]);
+				this.gameLayer.removeChild(targets[i]);
 				targets.splice(i,1);
 			}
 			radarTimer.stop();
