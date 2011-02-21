@@ -294,7 +294,7 @@
 				else
 				{
 					inRange = false;
-					checkedRange = false;
+					//checkedRange = false;
 				}
 			}
 			return false;
@@ -324,7 +324,7 @@
 		public function fireTimerHandler(e:TimerEvent):void
 		{
 			canFire = true;
-			main.soundEngine.playSoundPositional(Sounds.voiceWeaponsArmed, 1, SoundEngine.alexPan);
+			//main.soundEngine.playSoundPositional(Sounds.voiceWeaponsArmed, 1, SoundEngine.alexPan);
 		}
 		
 		public function checkCollisions():void {
