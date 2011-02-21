@@ -25,12 +25,21 @@
 		
 		public function Main() {
 			addChild(gameLayer);
+			
 			soundEngine = SoundEngine.getInstance();
 			soundEngine.loadAll(soundsLoaded);
 			StageClass.setStage(stage);
-			init();
+			
 			missions = new Missions(this);
-			missions.init();
+			
+			init();
+			
+			// overlay
+			overlay = new Overlay(this);
+			this.addChild(overlay);
+			overlay.init();
+			//uncomment to use debug
+			//overlay.visible = false;
 		}
 		
 		public function init():void
@@ -38,26 +47,11 @@
 			submarine = new Submarine(this);
 			gameLayer.addChild(submarine);
 			targets = new Vector.<Target>();
-			/*
-			enemy = new Enemy(this, 50, 100);
-			var mine:Mine = new Mine(this);
-			
-			targets.push(mine);
-			targets.push(enemy);
-			
-			this.addChild(mine);
-			this.addChild(enemy);
-			
-			mine.x = Math.random()*stage.stageWidth;
-			mine.y = Math.random()*stage.stageHeight;
-			*/
 			submarine.init();
 			submarine.x = stage.stageWidth/2;
 			submarine.y = stage.stageHeight/2;
 			
-			
-			//missions.currentIndex = 2;
-			//missions.advance();
+			missions.init();
 			
 			radarTimer = new Timer(100,int.MAX_VALUE);
 			radarTimer.addEventListener(TimerEvent.TIMER, radarTimerHandler, false, 0, true);
@@ -66,13 +60,6 @@
 			radarTimer.start();
 			
 			this.addEventListener(Event.ENTER_FRAME, update);
-			
-			// overlay
-			overlay = new Overlay(this);
-			this.addChild(overlay);
-			overlay.init();
-			//uncomment to use debug
-			//overlay.visible = false;
 		}
 		
 		public function remove() :void

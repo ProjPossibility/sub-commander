@@ -153,40 +153,51 @@
 			if(myState == SURFACE && waves1.deepBlue.currentFrameLabel == "endSurface" ) {
 				timer = 150;
 				readyToSurface = true;
+				//remove bubbles
+				for(var t:int = bubbleLayer.numChildren - 1; t >=0 ; t--) {
+					//bubblePool.push(bubbleLayer.getChildAt(t));
+					//bubbleLayer.removeChildAt(t);
+				}
 			}
 			
 			handleBubbles();
 		}
 		
 		public function handleBubbles():void {
-			if( myState == Overlay.BUBBLES || myState == Overlay.GAME || myState == Overlay.SUBMERGE ) {
+			if( myState != Overlay.READYTOPLAY && (myState == Overlay.BUBBLES || myState == Overlay.GAME || myState == Overlay.SUBMERGE || (myState == Overlay.SURFACE && readyToSurface == false))) {
 				bubbleTimer--;
-			}
-			if( myState == Overlay.GAME ) {
-				bubbleRate = 4;
-			} else {
-				bubbleRate = 3;
-			}
-			if(bubbleTimer < 0) {
-				bubbleTimer = this.bubbleRate;
-				if(bubblePool.length == 0) {
-					bubblePool.push( new Bubble() );
-				}
-				var bubble:Bubble = bubblePool.pop();
 				if( myState == Overlay.GAME ) {
-					bubble.x = Math.random()*700 - 75;
+					bubbleRate = 4;
 				} else {
-					bubble.x = Math.random()*550;
+					bubbleRate = 3;
 				}
-				bubble.y = 350+Math.random()*30;
-				bubble.scaleX = bubble.scaleY = Math.random()*.5 + .5;
-				bubbleLayer.addChild(bubble);
+				if(bubbleTimer < 0) {
+					bubbleTimer = this.bubbleRate;
+					if(bubblePool.length == 0) {
+						bubblePool.push( new Bubble() );
+					}
+					var bubble:Bubble = bubblePool.pop();
+					if( myState == Overlay.GAME ) {
+						bubble.x = Math.random()*700 - 75;
+					} else {
+						bubble.x = Math.random()*550;
+					}
+					if(myState != Overlay.SURFACE) {
+						bubble.y = 350+Math.random()*30;
+					} else {
+						bubble.y = Math.random()*50;
+					}
+					bubble.scaleX = bubble.scaleY = Math.random()*.5 + .5;
+					bubbleLayer.addChild(bubble);
+				}
 			}
 			for( var t:int = bubbleLayer.numChildren-1; t > 0; t-- ) {
 				var bubs:Bubble = bubbleLayer.getChildAt(t) as Bubble;
 				if(myState == Overlay.GAME) {
 					bubs.y -= 3;
-				} else {	
+				} else if(myState == Overlay.SURFACE) {	
+					bubs.y += 5;
+				} else {
 					bubs.y -= 8;
 				}
 				bubs.x -= main.submarine.spinSpeed * 2;
@@ -197,7 +208,7 @@
 				} else {
 					bubs.x -= main.submarine.speed;
 				}
-				if(bubs.y < 0) {
+				if(bubs.y < 0 || bubs.y > 600) {
 					bubblePool.push(bubs);
 					bubbleLayer.removeChild(bubs);
 				}
