@@ -116,7 +116,7 @@
 			if(playingTutorial)
 			{
 				counter++;
-				if(counter >500)
+				if(counter >5000)
 				{
 					playingTutorial = false;
 					submerge();
@@ -201,7 +201,6 @@
 				bubblePool.push(bubble);
 			}
 		}
-		
 		public function keyPressed( e:KeyboardEvent ):void
 		{
 			if(myState == READYTOPLAY) {
@@ -222,14 +221,37 @@
 		public function tutorial() :void
 		{
 			playingTutorial = true;
-			main.soundEngine.playSoundPositional(Sounds.voicetutorial1, 1, 0);
-			main.soundEngine.playSoundPositional(Sounds.pingPosition, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorial1, 1, 0, 0, 0, tutorialPingPosition);
+		}
+		//all these functions were used to ensure proper timing of dialogue and the radar pings
+		public function tutorialPingPosition():void{
+			SoundEngine.getInstance().playSoundPositional(Sounds.pingPosition, 1, 0, 0, 0, tutorial2);
+		}
+		
+		public function tutorial2():void{
 			main.soundEngine.playSoundPositional(Sounds.voicetutorial2, 1, 0);
-			main.soundEngine.playSoundPositional(Sounds.voicetutorial3, 1, 0);
-			main.soundEngine.playSoundPositional(Sounds.pingMine, 1, 0);
-			main.soundEngine.playSoundPositional(Sounds.voicetutorial4, 1, 0);
-			main.soundEngine.playSoundPositional(Sounds.pingEnemy, 1, 0);
-			main.soundEngine.playSoundPositional(Sounds.voicetutorial5, 1, 0);
+			SoundEngine.getInstance().playSoundPositional(Sounds.voicetutorial3, 1, 0, 0, 0, tutorialPingMine);
+		}
+		
+		public function tutorialPingMine():void{
+			SoundEngine.getInstance().playSoundPositional(Sounds.pingMine, 1, 0, 0, 0, tutorial4);
+		}
+		
+		public function tutorial4():void{
+			SoundEngine.getInstance().playSoundPositional(Sounds.voicetutorial4, 1, 0, 0, 0, tutorialPingEnemy);
+		}
+		public function tutorialPingEnemy():void{
+			SoundEngine.getInstance().playSoundPositional(Sounds.pingEnemy, 1, 0, 0, 0, tutorial5);
+		}
+		public function tutorial5():void{
+			SoundEngine.getInstance().playSoundPositional(Sounds.voicetutorial5, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorialLeft, 1, 1);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorialRight, 1, -1);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorialRight, 1, -1);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorialFront, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorialBehind, 0.8, 0);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorialClose, 1, 0);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorialFinal, 1, 0);
 		}
 	}
 }
