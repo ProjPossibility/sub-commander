@@ -45,7 +45,7 @@
 			currentIndex = 0;
 			gameIsOver = false;
 			//4 minute timer
-			gameTimer = new Timer(60000*4, 0);
+			gameTimer = new Timer(60000*3.5, 0);
 			gameTimer.addEventListener(TimerEvent.TIMER, gameOver);
 		}
 		
