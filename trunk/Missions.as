@@ -17,6 +17,8 @@
 		public var currentMission:int;
 		public var currentIndex:int;
 		
+		public var gameIsOver:Boolean = false;
+		
 		public var canAdvance:Boolean = true;
 		
 		//Timer for when game ends
@@ -41,8 +43,9 @@
 		
 		public function init():void {
 			currentIndex = 0;
+			gameIsOver = false;
 			//4 minute timer
-			gameTimer = new Timer(240000, 0);
+			gameTimer = new Timer(60000*.1, 0);
 			gameTimer.addEventListener(TimerEvent.TIMER, gameOver);
 		}
 		
@@ -56,52 +59,54 @@
 		}
 		
 		public function advance():void {
-			currentMission = missions[currentIndex];
-			//trace("Position: " + position);
-			trace("Current Mission: " + currentMission);
-			trace("Current index: " + currentIndex);
-			switch(currentIndex) {
-				//0 is case for tutorial
-				case 0:
-					tutorial();
-					//advance();
-					break;
-				//1 is case for descent
-				/*
-				case 1:
-					descent();
-					break;
-				*/
-				//2 is case for Position
-				case 1:
-					//trace("plaing");
-					//trace("second");
-					// spawn a new position target
-					trace("Advance position");
-					spawnPosition(200, 200);
-					break;
-				//3 is case for mine
-				case 2:
-					mine();
-					trace("Advance mine");
-					break;
-				//4 is case for twoMines
-				case 3:
-					twoMines();
-					trace("Advance mine2");
-					break;
-				//5 is for enemySub
-				case 4:
-					trace("Advance enemySub");
-					enemySub();
-					break;
-				default:
-					trace("default");
-					win();
-					break;
+			if(!gameIsOver) {
+				currentMission = missions[currentIndex];
+				//trace("Position: " + position);
+				trace("Current Mission: " + currentMission);
+				trace("Current index: " + currentIndex);
+				switch(currentIndex) {
+					//0 is case for tutorial
+					case 0:
+						tutorial();
+						//advance();
+						break;
+					//1 is case for descent
+					/*
+					case 1:
+						descent();
+						break;
+					*/
+					//2 is case for Position
+					case 1:
+						//trace("plaing");
+						//trace("second");
+						// spawn a new position target
+						trace("Advance position");
+						spawnPosition(200, 200);
+						break;
+					//3 is case for mine
+					case 2:
+						mine();
+						trace("Advance mine");
+						break;
+					//4 is case for twoMines
+					case 3:
+						twoMines();
+						trace("Advance mine2");
+						break;
+					//5 is for enemySub
+					case 4:
+						trace("Advance enemySub");
+						enemySub();
+						break;
+					default:
+						trace("default");
+						win();
+						break;
+				}
+				currentIndex++;
+				trace("Index increased now is: " + currentIndex);
 			}
-			currentIndex++;
-			trace("Index increased now is: " + currentIndex);
 		}
 		
 		public function update():void {
@@ -141,17 +146,22 @@
 		
 		public function win():void {
 			trace("You win");
-			currentIndex = 0;
-			main.overlay.surface();
-			main.remove();
-			main.init();
+			done();
 		}
 		
 		public function gameOver(e:TimerEvent):void {
-			main.overlay.surface();
-			main.remove();
-			main.init();
+			done();
 			trace("Game over, player ran out of time");
+		}
+		
+		public function done():void {
+			currentIndex = 0;
+			main.overlay.surface();
+			gameIsOver = true;
+			main.gameStart = false;
+			gameTimer.stop();
+			//main.remove();
+			//main.init();
 		}
 		
 		public function spawnPosition(minDist:Number, maxDist:Number):void {
