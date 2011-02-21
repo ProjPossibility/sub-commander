@@ -18,7 +18,7 @@
 		
 		public var bubblePool:Vector.<Bubble>;
 		public var bubbleLayer:MovieClip;
-		public var bubbleTimer:int = 0;
+		public var bubbleTimer:int = 20;
 		public var bubbleRate:int = 3;
 		
 		public static var READYTOPLAY:int = 5;
@@ -245,9 +245,8 @@
 		}
 		public function tutorial5():void{
 			SoundEngine.getInstance().playSoundPositional(Sounds.voicetutorial5, 1, 0);
-			main.soundEngine.playSoundPositional(Sounds.voicetutorialLeft, 1, 1);
-			main.soundEngine.playSoundPositional(Sounds.voicetutorialRight, 1, -1);
-			main.soundEngine.playSoundPositional(Sounds.voicetutorialRight, 1, -1);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorialLeft, 1, -1);
+			main.soundEngine.playSoundPositional(Sounds.voicetutorialRight, 1, 1);
 			main.soundEngine.playSoundPositional(Sounds.voicetutorialFront, 1, 0);
 			main.soundEngine.playSoundPositional(Sounds.voicetutorialBehind, 0.8, 0);
 			main.soundEngine.playSoundPositional(Sounds.voicetutorialClose, 1, 0);
