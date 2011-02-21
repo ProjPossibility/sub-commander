@@ -87,10 +87,15 @@
 		
 		public function beginDescentSounds():void{
 			SoundEngine.getInstance().stopWaveSound();//dive, diveDepths, diveDepthReached
+			playUnderwaterSound();
 			//soundEngine.playSoundVoice(Sounds.voiceCommenceDescent, diveSoundEnd);
 			//SoundEngine.getInstance().playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
 			//SoundEngine.getInstance().playSoundPositional(Sounds.voiceCommenceDescent, 1, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
 			SoundEngine.getInstance().playVoiceAggressive(Sounds.voiceCommenceDescent, 4, SoundEngine.anoopPan, 0, 0, diveSoundEnd, 2000);
+		}
+		
+		public function playUnderwaterSound(){
+			SoundEngine.getInstance().playSoundPositional(Sounds.underwater, .7, 0, 0, 0, playUnderwaterSound);
 		}
 		
 		public function diveSoundEnd():void{

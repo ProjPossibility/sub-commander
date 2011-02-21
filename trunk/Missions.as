@@ -146,10 +146,12 @@
 		
 		public function win():void {
 			trace("You win");
+			SoundEngine.getInstance().playSound(Sounds.voiceMissionSuccess);
 			done();
 		}
 		
 		public function gameOver(e:TimerEvent):void {
+			SoundEngine.getInstance().playSound(Sounds.voiceMissionFailed);
 			done();
 			trace("Game over, player ran out of time");
 		}

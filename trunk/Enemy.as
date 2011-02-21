@@ -9,7 +9,7 @@
 		public var counter:int = 0;
 		public var ySpeed:int = 2;
 		public var xSpeed:int = 2;
-		public var speed:int = 2;
+		public var speed:int = 1;
 		public var dirNum:int = 0;
 		
 		public var yPos:int;
